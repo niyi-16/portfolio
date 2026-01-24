@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Playwrite+AU+SA:wght@100..400&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Agdasima", serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -13,9 +15,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
+*, ::after, ::before{
   margin: 0;
   padding: 0;
+  box-sizing: inherit;
 }
 
 

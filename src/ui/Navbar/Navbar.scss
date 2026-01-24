@@ -1,27 +1,40 @@
 .nav-container {
   background-color: $main-color;
-  padding: 0 .3rem;
+  //padding: 0 .3rem;
 
   .main-nav {
     margin: 0 auto;
     display: flex;
-    width: 75%;
+    width: $body-width-large;
+    height: 7vh;
     justify-content: space-between;
+    align-items: center;
+
+    #nav-links-container {
+      //outline: 1px solid black;
+      width: 40vh;
+
+      .nav-links-content{
+        display: flex;
+        width: 100%;
+        //outline: 1px solid black;
+
+        a{
+          margin: 0 auto;
+        }
+      }
+    }
+
 
     // Media Queries for smaller screens
     &{
       @media (max-width: 768px) {
-        width: 90%;
+        width: $body-width-small;
       }
 
       @media (max-width: 440px) {
         font-size: 0.8em;
       }
-    }
-
-    #nav-links-container, #email-container {
-      display: flex;
-      padding: 1.1rem;
     }
 
   }
@@ -30,9 +43,10 @@
 
 a.header-link {
   color: $secondary-color;
-  padding: 1em;
-  font-size: 1.1em;
+  padding: .5rem;
+  font-size: 1.8em;
   text-align: center;
+  border-bottom: 3px solid transparent;
 
   &:hover {
     color: $link-hover;

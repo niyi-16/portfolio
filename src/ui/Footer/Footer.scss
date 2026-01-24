@@ -1,0 +1,33 @@
+.footer-container{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: .1rem 0;
+  background-color: #3f3b3b;
+
+
+  .f-content{
+    margin: 0 auto;
+    display: flex;
+    width: $body-width-large;
+    justify-content: space-between;
+    padding: .2rem 0;
+
+    >div{
+      display: flex;
+      align-items: center;
+      //outline: 1px solid black;
+    }
+  }
+}
+
+.social-icons div{
+  width: 110px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.social-icons img{
+  padding: .1em;
+  width: 30px;
+}

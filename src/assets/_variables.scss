@@ -5,3 +5,26 @@ $link-hover: teal;
 $button1: burlywood;
 
 $body-width-large: 75%;
+$body-width-small: 90%;
+
+@mixin grid-details{
+  font-size: 1.4rem;
+  max-width: 60rem;
+  line-height: 1.2;
+  margin: 1em 0em;
+}
+
+@mixin new_h3{
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 010px;
+}
+
+@mixin skills_item{
+  color: #F8F4E3;
+  background-color: black;
+  margin-right: 24px;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  padding: 16px 32px;
+}

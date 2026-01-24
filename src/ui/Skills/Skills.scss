@@ -1,0 +1,28 @@
+.title{
+  color: #ac9b51;
+  font-size: 1.5rem;
+}
+
+.skill-grid{
+  @include grid-details;
+
+  h3{
+    @include new_h3;
+  }
+
+
+  .skill-class{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+    >div{
+      color: #F8F4E3;
+      background-color: black;
+      margin-right: 24px;
+      margin-bottom: 24px;
+      border-radius: 16px;
+      padding: 16px 32px;
+    }
+  }
+}
