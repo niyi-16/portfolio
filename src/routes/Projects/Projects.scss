@@ -1,5 +1,46 @@
-.project-container{
+::-webkit-scrollbar {
+  display: none;
+}
+.project-page{
+  display: flex;
+  flex-direction: column;
+  margin-top: 1vh;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.filter-container {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  margin: 0 auto;
+  width: $body-width-large;
+  display: flex;
+  justify-content: end;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #504f4f;
+
+  .filter-form{
+    margin-right: 3rem;
+
+    input{
+      margin-right: 1rem;
+      padding: 0.4rem;
+      border: none;
+      border-radius: 3px;
+    }
+  }
+}
+
+.project-container {
   padding: 2rem 0;
   width: $body-width-large;
   margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: scroll;
+  flex: 1;
+
 }
