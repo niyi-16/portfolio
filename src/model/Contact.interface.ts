@@ -1,0 +1,6 @@
+export interface Contact {
+    id: number,
+    name: string,
+    url: string
+    logo: string
+}

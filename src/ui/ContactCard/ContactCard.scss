@@ -1,0 +1,20 @@
+.contact-card {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+
+  div{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+  img{
+    height: 50px;
+    margin-right: 10px;
+  }
+}
