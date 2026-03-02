@@ -3,10 +3,13 @@ import {useForm} from 'react-hook-form'
 
 import './Projects.scss'
 import ProjectCard from "../../ui/ProjectCard/ProjectCard";
+import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
+import type {Project} from "../../model/Project.ts";
 
 function Project() {
 
     const [content, setContent] = useState("")
+    const [modalOpen, setModalOpen] = useState(false)
     const {register, handleSubmit} = useForm();
     const [projects, setProjects] = useState([])
 
@@ -39,8 +42,20 @@ function Project() {
             </div>
             <div className={"project-container"}>
                 {
-                    projects.map((project: any) =>
-                        <ProjectCard key={project._id} {...project}/>
+                    projects.map((project: Project) =>
+                        <>
+                            <ProjectCard key={project._id}
+                                         name={project.name}
+                                         short_desc={project.short_desc}
+                                         stack={project.stack}
+                                         links={project.links}
+                                         images={project.images}
+                                         onClick={()=> setModalOpen(true)}
+                            />
+
+                            {/*TOdo: fix modal*/}
+                            <ProjectModal project = {project} onOpenChange={setModalOpen} open={modalOpen}/>
+                        </>
                     )}
 
                 {/*<p>On blood</p>*/}
