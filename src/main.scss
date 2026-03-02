@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Playwrite+AU+SA:wght@100..400&display=swap');
+@import "tailwindcss";
 
+@mixin debug($color) {
+  outline: 3px dashed change-color($color);
+}
 :root {
   font-family: "Agdasima", serif, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -31,8 +35,15 @@ a:hover {
   color: #535bf2;
 }
 
+.nav-container{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-
+.main-content{
+  @include debug(#c430ff);
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
