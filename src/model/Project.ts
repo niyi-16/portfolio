@@ -1,26 +1,24 @@
-export interface Project {
-    "_id": String,
+export type Project = {
+    "_id": string,
     "architecture": {
-        "frontend": [],
-        "backend": [],
-        "other": []
+        "frontend": string[],
+        "backend": string[],
+        "other": string[]
     },
-    "challenges": {
-        "brief": String,
-        "problem": String,
-        "solution": String
+    "challenges"?: {
+        "brief": string,
+        "problem": string,
+        "solution": string
     },
-    "features": [],
-    "images": {
-        "default": String
+    "features"?: string[],
+    "images"?: {
+        "default"?: string
     },
-    "keywords": [],
-    "lessons": [],
-    "links": {
-
-    },
-    "name": String,
-    "overview": {},
-    "short_desc": String,
-    "stack": []
+    "keywords"?: string[],
+    "lessons"?: string[],
+    "links"?: {},
+    "name": string,
+    "overview"?: {},
+    "short_desc": string,
+    "stack": string[]
 }
