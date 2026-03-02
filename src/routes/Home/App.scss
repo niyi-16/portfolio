@@ -7,7 +7,7 @@
 
 .app-container {
   padding: 2rem 0;
-  width: $body-width-large;
+  width: var.$body-width-large;
   margin: .2em auto 1em;
   //outline: 1px solid $main-color;
 

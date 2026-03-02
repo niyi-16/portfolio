@@ -1,11 +1,11 @@
 .nav-container {
-  background-color: $main-color;
+  background-color: var.$main-color;
   //padding: 0 .3rem;
 
   .main-nav {
     margin: 0 auto;
     display: flex;
-    width: $body-width-large;
+    width: var.$body-width-large;
     height: 7vh;
     justify-content: space-between;
     align-items: center;
@@ -29,7 +29,7 @@
     // Media Queries for smaller screens
     &{
       @media (max-width: 768px) {
-        width: $body-width-small;
+        width: var.$body-width-small;
       }
 
       @media (max-width: 440px) {
@@ -42,15 +42,15 @@
 
 
 a.header-link {
-  color: $secondary-color;
+  color: var.$secondary-color;
   padding: .5rem;
   font-size: 1.8em;
   text-align: center;
   border-bottom: 3px solid transparent;
 
   &:hover {
-    color: $link-hover;
-    border-bottom: 3px solid $link-hover;
+    color: var.$link-hover;
+    border-bottom: 3px solid var.$link-hover;
     transition: all 0.3s ease-in;
   }
 }

@@ -9,7 +9,7 @@
   .f-content{
     margin: 0 auto;
     display: flex;
-    width: $body-width-large;
+    width: var.$body-width-large;
     justify-content: space-between;
     padding: .2rem 0;
 
