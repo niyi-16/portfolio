@@ -6,16 +6,17 @@ type ProjectCardProps = {
     name: string
     short_desc: string
     stack: string[]
-    links?: { [key: string]: string }
-    images: { [key: string]: string }
+    links?: Record<string, string>,
+    images?:Record<string, string>,
+    onClick: () => void
 }
 
-function ProjectCard({images, stack, links, name, short_desc}: ProjectCardProps) {
+function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectCardProps) {
     const cover = images?.default
     const link_list = Object.keys(links)
 
     return (
-        <article className="project-card">
+        <article className="project-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : undefined }}>
             <div className="project-card__media">
                 {cover ? (
                     <img className="project-card__image" src={cover} alt={`${name} cover`} loading="lazy"/>
