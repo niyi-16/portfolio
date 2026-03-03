@@ -1,5 +1,5 @@
 import './ContactCard.scss'
-import type {Contact} from "../../model/Contact.interface.ts";
+import type {Contact} from "../../model/Contact.ts";
 
 function ContactCard(props:Contact) {
 
