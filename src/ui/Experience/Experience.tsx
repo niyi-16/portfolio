@@ -1,32 +1,40 @@
 import './Experience.scss'
 import {useEffect, useState} from "react";
+import type {Education} from "../../model/Education.ts";
+import type {Experience} from "../../model/Experience.ts";
 
 function Experience() {
 
+    const [education, setEducation] = useState<[]>([])
     const [experience, setExperience] = useState<[]>([])
 
 
+    //Education
     useEffect(() => {
-
         const getEducationHistory = async () => {
-
             const educationHistory = await fetch("http://localhost:3000/sq/education")
-
-            const data = await educationHistory
-
-            if (data.ok) {
-                setExperience(await data.json())
-            }
+            return await educationHistory.json()
         }
-        getEducationHistory()
+        getEducationHistory().then((data) => {
+            setEducation(data)
+        })
     }, [])
 
+    //Experience
+    useEffect(() => {
+        const getExperience = async () => {
+            const experience = await fetch("http://localhost:3000/sq/experience")
+            return await experience.json()
+        }
+        getExperience().then((data) => {
+            setExperience(data)
+        })
+    }, []);
 
     return (
-
-        <>
+        <div className={"flex-column h-100"}>
             {/*Exprience is empty*/}
-            {experience.length === 0 &&
+            {education.length === 0 &&
                 <>
                     <p className="grid-details">For the most part i grew up in Nigeria which is where I had my primary
                         and
@@ -56,24 +64,66 @@ function Experience() {
                 </>
             }
 
-            {
-                experience.length > 1 && (
-                    <>
-                        {console.log(experience)}
-                        {experience.map((item) =>
+            {education.length > 1 && (
+                <div id={"Education"} className={"mb-10"}>
+                    {education.map((item: Education) => (
+                            <MiniEducation key={item._id} education={item}/>
+                        )
+                    )}
+                </div>
+            )}
 
-                            <div key={item}>
-                                <p className="grid-details">{item["school"]}</p>
-                                <p>{item}</p>
-                            </div>
-
-
-                        )}
-                    </>
-                )
-            }
-        </>
+            {experience.length > 1 && (
+                <div className={"Experience"}>
+                    {experience.map((item: Experience) =>
+                        <MiniExperience key={item._id} experience={item}/>
+                    )}
+                </div>
+            )}
+        </div>
     )
 }
 
+const MiniEducation = ({education: education}: Education) => {
+    const startDate = () => {
+        const date = new Date(education.start_date)
+        return date.toLocaleDateString('en-CA', {year: 'numeric', month: 'long'})
+    }
+    const endDate = () => {
+        const date = new Date(education.end_date)
+        return date.toLocaleDateString('en-CA', {year: 'numeric', month: 'long'})
+    }
+
+    return (
+        <div className={"w-4/5 rounded-lg shadow-blue-200 shadow-sm"}>
+            <div className={"grid grid-cols-2 grid-rows-1"}>
+                <p className={"col-start-1 font-bold"}>{education.program}</p>
+                <p className={"col-start-2 text-red-500 text-end"}>{startDate()} - {endDate()}</p>
+                <p className={"row-start-2 col-span-2"}>{education.institution}, {education.location.city}, {education.location.province}</p>
+            </div>
+        </div>
+    )
+}
+
+
+const MiniExperience = ({experience: experience}: Experience) => {
+    const startDate = () => {
+        const date = new Date(experience.start_date)
+        return date.toLocaleDateString('en-CA', {year: 'numeric', month: 'long'})
+    }
+    const endDate = () => {
+        const date = new Date(experience.end_date)
+        return date.toLocaleDateString('en-CA', {year: 'numeric', month: 'long'})
+    }
+
+    return (
+        <div className={"w-4/5 rounded-lg shadow-blue-200 shadow-sm"}>
+                <div className={"grid grid-cols-2 grid-rows-1"}>
+                    <p className={"col-start-1 font-bold"}>{experience.title}</p>
+                    <p className={"col-start-2 text-amber-900 text-end"}>{startDate()} - {endDate()}</p>
+                    <p className={"row-start-2 col-span-2 "}>{experience.company}, {experience.location.province}</p>
+                </div>
+        </div>
+    )
+}
 export default Experience
