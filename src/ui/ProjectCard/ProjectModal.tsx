@@ -7,7 +7,6 @@ import {
 } from "../Dialouge/dialouge.tsx";
 import {icons} from "../../assets/png/icons.ts";
 
-
 function Section({title, children}: { title: string; children: React.ReactNode }) {
     return (
         <div className="space-y-2">
@@ -23,7 +22,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
     if (!project) return null;
     const {name, short_desc, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
     const cover = images?.default;
-    const linkList = Object.entries(links);
+    const linkList = Object.keys(links);
     const archItems = [
         ...(architecture?.frontend?.length ? [{label: "Frontend", items: architecture.frontend}] : []),
         ...(architecture?.backend?.length ? [{label: "Backend", items: architecture.backend}] : []),
@@ -37,7 +36,8 @@ function ProjectModal({open, onOpenChange, project}: any) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent
-                className="max-w-2xl max-h-[80vh] overflow-y-auto border-border/40 bg-[hsl(232,20%,8%)] text-foreground p-1 gap-0">
+                className="max-w-2xl max-h-[80vh] overflow-y-auto border-border/40 bg-[hsl(232,20%,8%)] text-foreground p-1 gap-0"
+            >
                 {/* Cover */}
                 {cover && (
                     <div className="w-full aspect-video overflow-hidden rounded-t-lg">

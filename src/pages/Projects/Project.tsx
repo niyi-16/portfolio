@@ -12,6 +12,7 @@ function Project() {
     const [modalOpen, setModalOpen] = useState(false)
     const {register, handleSubmit} = useForm();
     const [projects, setProjects] = useState([])
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
     useEffect(() => {
         const getProjects = async () => {
@@ -50,16 +51,17 @@ function Project() {
                                          stack={project.stack}
                                          links={project.links}
                                          images={project.images}
-                                         onClick={()=> setModalOpen(true)}
+                                         onClick={()=> setSelectedProject(project)}
                             />
 
                             {/*TOdo: fix modal*/}
-                            <ProjectModal project = {project} onOpenChange={setModalOpen} open={modalOpen}/>
+                            {selectedProject && (
+                                <ProjectModal project = {selectedProject} onOpenChange={(open) => {
+                                    if (!open) setSelectedProject(null)
+                                }} open={!!selectedProject}/>
+                            )}
                         </>
                     )}
-
-                {/*<p>On blood</p>*/}
-
             </div>
         </div>
     )

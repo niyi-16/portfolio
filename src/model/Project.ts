@@ -16,7 +16,7 @@ export type Project = {
     },
     "keywords"?: string[],
     "lessons"?: string[],
-    "links"?: {},
+    "links"?: Record<string, string>
     "name": string,
     "overview"?: {},
     "short_desc": string,

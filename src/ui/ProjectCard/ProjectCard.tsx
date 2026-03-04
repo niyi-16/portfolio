@@ -44,8 +44,8 @@ function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectC
                 </Link>
 
                 <div className={"project-card__footer"} >
-                    {link_list.map((link) => (
-                        <a className={"project-card__icon-link"}>
+                    {link_list.map((link, index) => (
+                        <a className={"project-card__icon-link"} key={index} href={link_list[link]} target="_blank">
                             <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
                         </a>
                     ))}
