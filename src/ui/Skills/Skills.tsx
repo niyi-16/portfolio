@@ -5,6 +5,7 @@ function Skills() {
         "Data Analytics": ["Linear Algebra", "R", "Data Calculus", "Microsoft Excel"],
         "Databases": ["MySQL", "MSSQL", "MongoDB", "Microsoft Access"],
         "Tools & Platforms": ["Windows Management", "Git", "Linux", "Docker", "Azure"],
+        "Frameworks": ["Angular", "React", ".NET"],
     }
 
     return (
