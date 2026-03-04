@@ -6,20 +6,22 @@ import {BrowserRouter as Router, Routes,  Route} from 'react-router-dom'
 import './main.scss'
 
 //Components
-import App from './routes/Home/App.tsx'
+import App from './pages/Home/App.tsx'
 import Navbar from "../src/ui/Navbar/Navbar.tsx"
-import Footer from "../src/ui/Footer/Footer.tsx"
-import Project from "./routes/Projects/Project.tsx";
+import Project from "./pages/Projects/Project.tsx";
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-      <Navbar/>
-      <Router>
-          <Routes>
-              <Route path="/" element={<App/>}></Route>
-              <Route path="/Projects" element={<Project/>}></Route>
-          </Routes>
-      </Router>
-      {/*<Footer/>*/}
-  </StrictMode>,
+    <StrictMode>
+        <Navbar/>
+        <div className={"main-content"}>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<App/>}></Route>
+                    <Route path="/projects" element={<Project/>}></Route>
+                    <Route path="/details" element={<Project/>}></Route>
+                </Routes>
+            </Router>
+        </div>
+        {/*<Footer/>*/}
+    </StrictMode>,
 )
