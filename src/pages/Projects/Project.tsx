@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 
 import './Projects.scss'
-import ProjectCard from "../../ui/ProjectCard/ProjectCard";
+import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
 import type {Project} from "../../model/Project.ts";
 
