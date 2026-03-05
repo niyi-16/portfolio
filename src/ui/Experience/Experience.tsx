@@ -3,6 +3,7 @@ import type {Education} from "../../model/Education.ts";
 import type {Experience} from "../../model/Experience.ts";
 import {Badge} from "../loveable/badge.tsx";
 import {GraduationCap, Briefcase, MapPin, Calendar, ChevronDown} from "lucide-react";
+import {API_URL, EDUCATION, EXPERIENCE} from "../../../env.ts";
 
 function Experience() {
 
@@ -13,7 +14,7 @@ function Experience() {
     //Education
     useEffect(() => {
         const getEducationHistory = async () => {
-            const educationHistory = await fetch("http://localhost:3000/sq/education")
+            const educationHistory = await fetch(API_URL + EDUCATION)
             return await educationHistory.json()
         }
         getEducationHistory().then((data) => {
@@ -24,7 +25,7 @@ function Experience() {
     //Experience
     useEffect(() => {
         const getExperience = async () => {
-            const experience = await fetch("http://localhost:3000/sq/experience")
+            const experience = await fetch(API_URL + EXPERIENCE)
             return await experience.json()
         }
         getExperience().then((data) => {

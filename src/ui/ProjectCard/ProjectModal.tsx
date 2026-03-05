@@ -55,7 +55,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                                         return (
                                             <a
                                                 key={index}
-                                                href={link}
+                                                href={links[link]}
                                                 target="_blank"
                                                 rel="noreferrer"
                                                 aria-label={link}

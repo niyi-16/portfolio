@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import {useForm} from 'react-hook-form'
 
 import './Projects.scss'
+import {API_URL, PROJECTS} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
 import type {Project} from "../../model/Project.ts";
@@ -16,7 +17,7 @@ function Project() {
 
     useEffect(() => {
         const getProjects = async () => {
-            const response = await fetch("http://localhost:3000/sq/projects")
+            const response = await fetch(API_URL + PROJECTS)
             return response.json()
         }
 
