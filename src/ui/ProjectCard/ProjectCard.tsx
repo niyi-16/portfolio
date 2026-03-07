@@ -1,5 +1,5 @@
 import './ProjectCard.scss'
-import { Link} from "react-router-dom"
+// import { Link} from "react-router-dom"
 import {icons} from "../../assets/png/icons"
 
 type ProjectCardProps = {
@@ -13,9 +13,10 @@ type ProjectCardProps = {
 
 function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectCardProps) {
     const cover = images?.default
-    const link_list = Object.keys(links)
+    const link_list = Object.keys(links as Record<string, string>)
 
     return (
+        // @ts-ignore
         <article className="project-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : undefined }}>
             <div className="project-card__media">
                 {cover ? (
@@ -39,12 +40,13 @@ function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectC
 
                 <p className="project-card__description">{short_desc}</p>
 
-                <Link className="project-card__link" href={"/details"} target="_blank" rel="noreferrer">
+                <a className="project-card__link" href={"/details"} target="_blank" rel="noreferrer">
                     View project
-                </Link>
+                </a>
 
                 <div className={"project-card__footer"} >
-                    {link_list.map((link, index) => (
+                    {link_list.map((link:string, index) => (
+                        // @ts-ignore
                         <a className={"project-card__icon-link"} key={index} href={link_list[link]} target="_blank">
                             <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
                         </a>

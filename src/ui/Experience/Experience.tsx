@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import type {Education} from "../../model/Education.ts";
-import type {Experience} from "../../model/Experience.ts";
+import type {ExperienceType} from "../../model/ExperienceType.ts";
 import {Badge} from "../loveable/badge.tsx";
 import {GraduationCap, Briefcase, MapPin, Calendar, ChevronDown} from "lucide-react";
 import {API_URL, EDUCATION, EXPERIENCE} from "../../../env.ts";
@@ -22,7 +22,7 @@ function Experience() {
         })
     }, [])
 
-    //Experience
+    //ExperienceType
     useEffect(() => {
         const getExperience = async () => {
             const experience = await fetch(API_URL + EXPERIENCE)
@@ -81,14 +81,14 @@ function Experience() {
                 </div>
             )}
 
-            {/* Experience */}
+            {/* ExperienceType */}
             {experience.length > 0 && (
                 <div className="space-y-2">
                     <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                         Experience
                     </h3>
                     <div className="space-y-2">
-                        {experience.map((item: Experience) => (
+                        {experience.map((item: ExperienceType) => (
                             <MiniExperience key={item._id} experience={item}/>
                         ))}
                     </div>
@@ -123,13 +123,13 @@ const MiniEducation = ({education}: { education: Education }) => {
         <div
             className="group flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-2.5 transition-all hover:border-primary/40 hover:shadow-md hover:shadow-primary/5">
             <GraduationCap className="h-4 w-4 shrink-0 text-primary"/>
-            <div className="flex flex-1 items-center gap-2 overflow-hidden">
-        <span className="truncate text-sm font-medium text-foreground">
-          {education.program}
-        </span>
+            <div className="flex flex-col flex-1 items-start overflow-hidden">
+                <span className="truncate text-sm font-medium text-foreground">
+                  {education.program}
+                </span>
                 <span className="hidden text-xs text-muted-foreground sm:inline">
-          — {education.institution}
-        </span>
+                    {education.institution}
+                </span>
             </div>
             <div className="flex shrink-0 items-center gap-2">
                 <Badge
@@ -145,7 +145,7 @@ const MiniEducation = ({education}: { education: Education }) => {
     )
 }
 
-function MiniExperience({experience}: { experience: Experience }) {
+function MiniExperience({experience}: { experience: ExperienceType }) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -155,13 +155,13 @@ function MiniExperience({experience}: { experience: Experience }) {
             {/* Pill header */}
             <div className="flex items-center gap-3 px-4 py-2.5">
                 <Briefcase className="h-4 w-4 shrink-0 text-primary"/>
-                <div className="flex flex-1 items-center gap-2 overflow-hidden">
-                <span className="truncate text-sm font-medium text-foreground">
-                    {experience.title}
-                </span>
+                <div className="flex flex-col flex-1 items-start overflow-hidden">
+                    <span className="truncate text-sm font-medium text-foreground">
+                        {experience.title}
+                    </span>
                     <span className="hidden text-xs text-muted-foreground sm:inline">
-                    — {experience.company}
-                </span>
+                        {experience.company}
+                    </span>
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
                     {experience.current && (

@@ -86,7 +86,7 @@ function App() {
                 <div className="flex flex-wrap gap-6">
                     <ProjectCard
                         name={sampleProject.name}
-                        description={sampleProject.short_desc}
+                        short_desc={sampleProject.short_desc}
                         stack={sampleProject.stack}
                         links={sampleProject.links}
                         images={sampleProject.images}

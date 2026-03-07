@@ -1,4 +1,4 @@
-export type Project = {
+export type ProjectType = {
     "_id": string,
     "architecture": {
         "frontend": string[],
@@ -18,7 +18,7 @@ export type Project = {
     "lessons"?: string[],
     "links"?: Record<string, string>
     "name": string,
-    "overview"?: {},
+    "overview"?: Record<string, string>
     "short_desc": string,
     "stack": string[]
 }

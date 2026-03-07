@@ -8,7 +8,7 @@ import './main.scss'
 //Components
 import App from './pages/Home/App.tsx'
 import Navbar from "../src/ui/Navbar/Navbar.tsx"
-import Project from "./pages/Projects/Project.tsx";
+import {Project} from "./pages/Projects/Project.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

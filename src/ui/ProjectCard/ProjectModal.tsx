@@ -77,7 +77,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                     {stack?.length > 0 && (
                         <Section title="Tech Stack">
                             <div className="flex flex-wrap gap-2">
-                                {stack.map((t) => (
+                                {stack.map((t:string) => (
                                     <span
                                         key={t}
                                         className="px-3 py-1.5 rounded-full text-sm bg-accent/30 border border-border/50 text-foreground/90">
@@ -95,7 +95,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                                     <div key={label} className="space-y-1.5">
                                         <p className="text-xs font-medium text-muted-foreground">{label}</p>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {items.map((item) => (
+                                            {items.map((item:string) => (
                                                 <span key={item}
                                                       className="px-2 py-1 text-xs rounded bg-accent/20 text-foreground/80">
                                                   {item}
@@ -111,7 +111,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                     {features && features.length > 0 && (
                         <Section title="Features">
                             <ul className="list-disc list-inside space-y-1 text-sm text-foreground/80">
-                                {features.map((f, i) => (
+                                {features.map((f:string, i:number) => (
                                     <li key={i}>{f}</li>
                                 ))}
                             </ul>
@@ -141,7 +141,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                     {lessons && lessons.length > 0 && (
                         <Section title="Lessons Learned">
                             <ul className="list-disc list-inside space-y-1 text-sm text-foreground/80">
-                                {lessons.map((l, i) => (
+                                {lessons.map((l:string, i:number) => (
                                     <li key={i}>{l}</li>
                                 ))}
                             </ul>
@@ -150,7 +150,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                     {/* Keywords */}
                     {keywords && keywords.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border/30">
-                            {keywords.map((k) => (
+                            {keywords.map((k:string) => (
                                 <span key={k} className="text-xs text-muted-foreground">
                   #{k}
                 </span>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './Dropdown.scss';
-import {icons} from "../../assets/png/icons.ts";
 import type {Contact} from "../../model/Contact.ts";
 
 const Dropdown = ({main, content, className}: {main: string, content: Contact[], className: string}) => {

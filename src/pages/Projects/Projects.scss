@@ -20,17 +20,22 @@
   padding-bottom: 5px;
   border-bottom: 1px dashed #504f4f;
 
-  .filter-form{
-    margin-right: 3rem;
+
 
     input{
-      margin-right: 1rem;
-      padding: 0.4rem;
-      border: none;
+      margin-right: 3rem;
+      padding: 0.2rem;
+      color: #0f1018;
+      background-color: #f8f4e3 ;
+      border: navajowhite 1px solid;
       border-radius: 3px;
+
+      ::placeholder{
+        color: #0f1018;
+      }
     }
   }
-}
+
 
 .project-container {
   padding: 2rem 0;

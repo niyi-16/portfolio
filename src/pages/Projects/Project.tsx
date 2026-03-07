@@ -5,15 +5,20 @@ import './Projects.scss'
 import {API_URL, PROJECTS} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
-import type {Project} from "../../model/Project.ts";
+import type {ProjectType} from "../../model/ProjectType.ts";
 
 function Project() {
 
-    const [content, setContent] = useState("")
+    // @ts-ignore
+    const [temp, settemp] = useState([])
+    // @ts-ignore
+    const [content, setContent] = useState(undefined)
+    // @ts-ignore
     const [modalOpen, setModalOpen] = useState(false)
+    // @ts-ignore
     const {register, handleSubmit} = useForm();
-    const [projects, setProjects] = useState([])
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+    const [projects, setProjects] = useState<ProjectType[]>([])
+    const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
 
     useEffect(() => {
         const getProjects = async () => {
@@ -27,24 +32,41 @@ function Project() {
     }, [])
 
     const handleSearch = (e: any) => {
-        // e.preventDefault()
-        console.log(e)
+        const value = e.target.value.toLowerCase();
+
+        if (value.length > 3) {
+            const filtered = projects.filter(project => {
+                const searchable = [
+                    ...(project.keywords || []),
+                    ...(project.stack || [])
+                ];
+
+                return searchable.some(item =>
+                    item.toLowerCase().includes(value)
+                );
+            });
+            console.log(filtered)
+            setProjects(filtered)
+            // setFilter(filtered)
+        }
+
     }
     return (
 
         <div className={"project-page"}>
             <div className={"filter-container"}>
-                <form method="post" onSubmit={handleSubmit(handleSearch)} className={"filter-form"}>
                     <input type="text"
                            placeholder="Search Projects"
+                           className={"filter-form"}
                            {...register("search")}
-                           value={content} onChange={(e:any)=>setContent(e.target.value)}/>
-                    <button type={"submit"}>Filter</button>
-                </form>
+                           value={content} onChange={handleSearch}
+                    />
+
+
             </div>
             <div className={"project-container"}>
                 {
-                    projects.map((project: Project) =>
+                    projects.map((project: ProjectType) =>
                         <>
                             <ProjectCard key={project._id}
                                          name={project.name}
@@ -57,7 +79,7 @@ function Project() {
 
                             {/*TOdo: fix modal*/}
                             {selectedProject && (
-                                <ProjectModal project = {selectedProject} onOpenChange={(open) => {
+                                <ProjectModal project = {selectedProject} onOpenChange={(open:unknown) => {
                                     if (!open) setSelectedProject(null)
                                 }} open={!!selectedProject}/>
                             )}
@@ -68,4 +90,4 @@ function Project() {
     )
 }
 
-export default Project
+export {Project}
