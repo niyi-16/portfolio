@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/portfolio/",
+  base: "https://niyi-16.github.io/portfolio/",
   plugins: [react()],
   css: {
     preprocessorOptions:{
