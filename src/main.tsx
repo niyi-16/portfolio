@@ -1,6 +1,6 @@
-import { StrictMode} from 'react'
-import { createRoot } from 'react-dom/client'
-import {BrowserRouter as Router, Routes,  Route} from 'react-router-dom'
+import {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 
 //Style Sheet
 import './main.scss'
@@ -10,18 +10,20 @@ import App from './pages/Home/App.tsx'
 import Navbar from "../src/ui/Navbar/Navbar.tsx"
 import {Project} from "./pages/Projects/Project.tsx";
 
+import {BASE} from "../env.ts";
+
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <Navbar/>
-        <div className={"main-content"}>
-            <Router>
+        <Router basename={BASE}>
+            <Navbar/>
+            <div className={"main-content"}>
                 <Routes>
                     <Route path="/" element={<App/>}></Route>
                     <Route path="/projects" element={<Project/>}></Route>
-                    <Route path="/details" element={<Project/>}></Route>
                 </Routes>
-            </Router>
-        </div>
-        {/*<Footer/>*/}
+            </div>
+        </Router>
+        {/*<Footer/>*/
+        }
     </StrictMode>,
 )
