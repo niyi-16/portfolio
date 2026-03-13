@@ -1,6 +1,6 @@
 import './ProjectCard.scss'
 // import { Link} from "react-router-dom"
-import {icons} from "../../assets/png/icons"
+import {icons} from "../../../icons.ts"
 
 type ProjectCardProps = {
     name: string

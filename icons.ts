@@ -1,5 +1,5 @@
 
-const rootPath = "src/assets/png/"
+const rootPath = "https://dasil-image-bucket.s3.us-east-2.amazonaws.com/png/"
 const icons: Record<string, string> = {
     "github": rootPath + "github.png",
     "email": rootPath + "email_logo.png",

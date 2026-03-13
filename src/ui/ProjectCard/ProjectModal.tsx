@@ -5,7 +5,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "../Dialouge/dialouge.tsx";
-import {icons} from "../../assets/png/icons.ts";
+import {icons} from "../../../icons.ts";
 
 function Section({title, children}: { title: string; children: React.ReactNode }) {
     return (
