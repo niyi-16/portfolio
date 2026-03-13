@@ -101,6 +101,7 @@ function Experience() {
 function formatDate(dateStr: string | null): string {
     if (!dateStr) return "Present";
     const date = new Date(dateStr);
+    date.setDate(date.getDate() + 1)
     return date.toLocaleDateString("en-CA", {year: "numeric", month: "short"});
 }
 
