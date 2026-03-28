@@ -5,7 +5,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "../Dialouge/dialouge.tsx";
-import {icons} from "../../../icons.ts";
+import {icons, svg} from "../../../icons.tsx";
 
 function Section({title, children}: { title: string; children: React.ReactNode }) {
     return (
@@ -22,7 +22,8 @@ function ProjectModal({open, onOpenChange, project}: any) {
     if (!project) return null;
     const {name, short_desc, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
     const cover = images?.default;
-    const linkList = Object.keys(links);
+    const linksSafe = links || {};
+    const linkList = Object.keys(linksSafe);
     const archItems = [
         ...(architecture?.frontend?.length ? [{label: "Frontend", items: architecture.frontend}] : []),
         ...(architecture?.backend?.length ? [{label: "Backend", items: architecture.backend}] : []),
@@ -62,7 +63,11 @@ function ProjectModal({open, onOpenChange, project}: any) {
                                                 title={link}
                                                 className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
                                             >
-                                                <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
+                                                <a className={"project-card__icon-link"} key={index} href={linksSafe[link]} target="_blank">
+                                                    {svg(link, 24, "text-amber-500") ??
+                                                        <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
+                                                    }
+                                                </a>
                                             </a>
                                         );
                                     })}

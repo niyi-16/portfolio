@@ -11,15 +11,13 @@ function Project() {
 
     // @ts-ignore
     const [temp, settemp] = useState([])
-    // @ts-ignore
-    const [content, setContent] = useState(undefined)
+    const [search, setSearch] = useState("")
     // @ts-ignore
     const [modalOpen, setModalOpen] = useState(false)
-    // @ts-ignore
-    const {register, handleSubmit} = useForm();
     const [projects, setProjects] = useState<ProjectType[]>([])
     const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
 
+    /*Get Projects from API*/
     useEffect(() => {
         const getProjects = async () => {
             const response = await fetch(API_URL + PROJECTS)
@@ -31,26 +29,17 @@ function Project() {
         })
     }, [])
 
-    const handleSearch = (e: any) => {
-        const value = e.target.value.toLowerCase();
-
-        if (value.length > 3) {
-            const filtered = projects.filter(project => {
-                const searchable = [
-                    ...(project.keywords || []),
-                    ...(project.stack || [])
-                ];
-
-                return searchable.some(item =>
-                    item.toLowerCase().includes(value)
-                );
-            });
-            console.log(filtered)
-            setProjects(filtered)
-            // setFilter(filtered)
-        }
-
-    }
+    /*Filter Projects*/
+    const filteredProjects = projects.filter(project => {
+        const searchable = [
+            ...(project.keywords || []),
+            ...(project.stack || [])
+        ];
+        return searchable.some(item =>
+            item.toLowerCase().includes(search.toLowerCase())
+        );
+    })
+    
     return (
 
         <div className={"project-page"}>
@@ -58,15 +47,15 @@ function Project() {
                     <input type="text"
                            placeholder="Search Projects"
                            className={"filter-form"}
-                           {...register("search")}
-                           value={content} onChange={handleSearch}
+                           value={search}
+                           onChange={(e) => setSearch(e.target.value)}
                     />
 
 
             </div>
             <div className={"project-container"}>
                 {
-                    projects.map((project: ProjectType) =>
+                    filteredProjects.map((project: ProjectType) =>
                         <>
                             <ProjectCard key={project._id}
                                          name={project.name}
