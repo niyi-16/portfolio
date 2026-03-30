@@ -10,18 +10,39 @@ const icons: Record<string, string> = {
     "demo": rootPath + "web.png",
 }
 
-const svgPath: Record<string, string> ={
-    "github": `${BASE}/github.svg#Dribbble-Light-Preview`,
-    "linkedin": `${BASE}/linkedin.svg#linkedin`,
-    "website": `${BASE}/web.svg#web`,
-    "demo": `${BASE}/web.svg#web`,
-    "email": `${BASE}/email.svg#email`,
+export type IconType = {
+    icon: string,
+    size?: number,
+    className?: string
+    defaultColor?: string
 }
-const Icon = ({ icon, size = 24, className = "" }: { icon:string, size?: number, className?: string }) => (
+const svgPath: Record<string, IconType> ={
+    "github":  {
+        icon: `${BASE}/github.svg#Dribbble-Light-Preview`,
+        defaultColor: "#ffffff",
+    },
+    "linkedin":{
+        icon: `${BASE}/linkedin.svg#linkedin`,
+    },
+    "website": {
+        icon: `${BASE}/web.svg#web`,
+    },
+    "demo":    {
+        icon: `${BASE}/web.svg#web`,
+    },
+    "email":   {
+        icon: `${BASE}/email.svg#email`,
+    },
+    "document": {
+        icon: `${BASE}/document.svg#document`,
+    },
+}
+const Icon = ({ icon, size, color, className}: { icon:string, size?: number, color?: string, className?: string }) => (
     <svg
         width={size}
         height={size}
         className={className}
+        style={{color: color}}
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
     >
@@ -29,9 +50,10 @@ const Icon = ({ icon, size = 24, className = "" }: { icon:string, size?: number,
     </svg>
 );
 
-const svg=  (icon:string, size:number, className:string) => {
+const svg=  ({ icon, size, color, className}: { icon:string, size?: number, color?: string, className?: string }) => {
     if (!svgPath[icon]) return null;
-    return <Icon icon={svgPath[icon]} size={size} className={className} />
+    if (className) return <Icon icon={svgPath[icon].icon} size={svgPath[icon].size ?? size} className={className} />
+    return <Icon icon={svgPath[icon].icon} size={svgPath[icon].size ?? size} color={svgPath[icon].defaultColor ?? color} />
 }
 
 export {icons, svg, svgPath}

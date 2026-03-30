@@ -1,6 +1,4 @@
 import {useState, useEffect} from 'react'
-import {useForm} from 'react-hook-form'
-
 import './Projects.scss'
 import {API_URL, PROJECTS} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
@@ -9,11 +7,7 @@ import type {ProjectType} from "../../model/ProjectType.ts";
 
 function Project() {
 
-    // @ts-ignore
-    const [temp, settemp] = useState([])
     const [search, setSearch] = useState("")
-    // @ts-ignore
-    const [modalOpen, setModalOpen] = useState(false)
     const [projects, setProjects] = useState<ProjectType[]>([])
     const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
 

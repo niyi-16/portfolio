@@ -64,7 +64,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                                                 className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
                                             >
                                                 <a className={"project-card__icon-link"} key={index} href={linksSafe[link]} target="_blank">
-                                                    {svg(link, 24, "text-amber-500") ??
+                                                    {svg({icon: link, size: 24, className:"text-amber-500"}) ??
                                                         <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
                                                     }
                                                 </a>

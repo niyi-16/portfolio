@@ -22,7 +22,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
+.external-link{
+  color: #ac9b51;
+  text-decoration: underline;
+}
 
 a {
   font-weight: 500;
@@ -40,7 +43,7 @@ a:hover {
 }
 
 .main-content{
-  @include debug(#c430ff);
+  //@include debug(#c430ff);
 }
 
 button {
