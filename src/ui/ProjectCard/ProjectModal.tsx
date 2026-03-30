@@ -20,7 +20,7 @@ function Section({title, children}: { title: string; children: React.ReactNode }
 
 function ProjectModal({open, onOpenChange, project}: any) {
     if (!project) return null;
-    const {name, short_desc, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
+    const {name, overview, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
     const cover = images?.default;
     const linksSafe = links || {};
     const linkList = Object.keys(linksSafe);
@@ -75,7 +75,7 @@ function ProjectModal({open, onOpenChange, project}: any) {
                             )}
                         </div>
                         <DialogDescription className="text-base text-muted-foreground">
-                            {short_desc}
+                            {overview?.summary}
                         </DialogDescription>
                     </DialogHeader>
                     {/* Stack */}
@@ -157,8 +157,8 @@ function ProjectModal({open, onOpenChange, project}: any) {
                         <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border/30">
                             {keywords.map((k:string) => (
                                 <span key={k} className="text-xs text-muted-foreground">
-                  #{k}
-                </span>
+                                    #{k}
+                                </span>
                             ))}
                         </div>
                     )}

@@ -24,7 +24,7 @@ function Details() {
     const [loading, setLoading] = useState(!project);
 
     useEffect(() => {
-        if (!project && id) {
+        if (id) {
             const fetchProject = async () => {
                 try {
                     const response = await fetch(`${API_URL}${PROJECTS}?project_id=${id}`);
@@ -38,12 +38,12 @@ function Details() {
             };
             fetchProject();
         }
-    }, [id, project]);
+    }, []);
 
     if (loading) return <div className="p-6 text-center">Loading...</div>;
     if (!project) return <div className="p-6 text-center">Project not found.</div>;
 
-    const {name, short_desc, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
+    const {name, overview, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
     const cover = images?.default;
     const linksSafe = links || {};
     const linkList = Object.keys(linksSafe);
@@ -101,7 +101,7 @@ function Details() {
                                 )}
                             </div>
                             <p className="text-base text-muted-foreground">
-                                {short_desc}
+                                {overview?.summary}
                             </p>
                         </div>
                         {/* Stack */}
