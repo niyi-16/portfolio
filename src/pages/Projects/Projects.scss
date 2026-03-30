@@ -47,5 +47,15 @@
   justify-content: center;
   overflow-y: scroll;
   flex: 1;
+}
+@media screen and (max-width: 768px) {
+  .project-container, .filter-container, .project-page {
+    width: 100%;
+  }
 
+  .filter-container{
+      input{
+        margin-right: 1rem;
+      }
+  }
 }

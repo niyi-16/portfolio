@@ -4,9 +4,11 @@ import {API_URL, PROJECTS} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
 import type {ProjectType} from "../../model/ProjectType.ts";
+import {useNavigate} from "react-router-dom"
 
 function Project() {
-
+    const navigate = useNavigate()
+    const [devWidth, setDevWidth] = useState(window.innerWidth);
     const [search, setSearch] = useState("")
     const [projects, setProjects] = useState<ProjectType[]>([])
     const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
@@ -33,7 +35,13 @@ function Project() {
             item.toLowerCase().includes(search.toLowerCase())
         );
     })
-    
+
+    useEffect(() => {
+        const handleResize = () => setDevWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [])
+
     return (
 
         <div className={"project-page"}>
@@ -50,23 +58,30 @@ function Project() {
             <div className={"project-container"}>
                 {
                     filteredProjects.map((project: ProjectType) =>
-                        <>
-                            <ProjectCard key={project._id}
+                        <div key={project._id}>
+                            <ProjectCard 
                                          name={project.name}
                                          short_desc={project.short_desc}
                                          stack={project.stack}
                                          links={project.links}
                                          images={project.images}
-                                         onClick={()=> setSelectedProject(project)}
+                                         onClick={()=> {
+                                             if (devWidth < 768) {
+                                                 navigate(`/projects/details/${project._id}`, { state: { project } })
+                                             }
+                                             else {
+                                                 setSelectedProject(project)
+                                             }
+                                         }}
                             />
 
                             {/*TOdo: fix modal*/}
-                            {selectedProject && (
+                            {selectedProject && selectedProject._id === project._id && (
                                 <ProjectModal project = {selectedProject} onOpenChange={(open:unknown) => {
                                     if (!open) setSelectedProject(null)
                                 }} open={!!selectedProject}/>
                             )}
-                        </>
+                        </div>
                     )}
             </div>
         </div>

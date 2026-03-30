@@ -18,7 +18,7 @@ const Dropdown = ({main, content, className}: {main: string, content: Contact[],
                     {content.map((item:Contact) => (
                         <a key={item.id} href={item.url} className="dropdown-item" target="_blank">
                             <img src={item.logo?.icon} alt={`${item.name} icon`} width={24} height={24}/>
-                            <span>{item.name}</span>
+                            <span>&nbsp; {item.name}</span>
                         </a>
                     ))}
                 </div>
