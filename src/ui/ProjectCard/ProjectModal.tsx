@@ -6,6 +6,7 @@ import {
     DialogDescription,
 } from "../Dialouge/dialouge.tsx";
 import {icons, svg} from "../../../icons.tsx";
+import ImageCarousel from "../Carousel/ImageCarousel.tsx";
 
 function Section({title, children}: { title: string; children: React.ReactNode }) {
     return (
@@ -22,6 +23,8 @@ function ProjectModal({open, onOpenChange, project}: any) {
     if (!project) return null;
     const {name, overview, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
     const cover = images?.default;
+    const showcase = images?.showcase ? [{ src: cover, alt: `${name} cover` }, ...images.showcase] : cover ? [{ src: cover, alt: `${name} cover` }] : [];
+
     const linksSafe = links || {};
     const linkList = Object.keys(linksSafe);
     const archItems = [
@@ -41,8 +44,8 @@ function ProjectModal({open, onOpenChange, project}: any) {
             >
                 {/* Cover */}
                 {cover && (
-                    <div className="w-full aspect-video overflow-hidden rounded-t-lg">
-                        <img src={cover} alt={`${name} cover`} className="w-full h-full object-cover"/>
+                    <div className="w-full aspect-video overflow-hidden rounded-t-lg bg-black/20">
+                        {showcase &&  <ImageCarousel images={showcase} />}
                     </div>
                 )}
                 <div className="p-6 space-y-6">
@@ -54,21 +57,18 @@ function ProjectModal({open, onOpenChange, project}: any) {
                                 <div className="flex gap-1.5 shrink-0">
                                     {linkList.map((link, index) => {
                                         return (
-                                            <a
+                                            <div
                                                 key={index}
-                                                href={links[link]}
-                                                target="_blank"
-                                                rel="noreferrer"
                                                 aria-label={link}
                                                 title={link}
                                                 className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
                                             >
                                                 <a className={"project-card__icon-link"} key={index} href={linksSafe[link]} target="_blank">
-                                                    {svg({icon: link, size: 24, className:"text-amber-500"}) ??
+                                                    {svg({icon: link, size: 24}) ??
                                                         <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
                                                     }
                                                 </a>
-                                            </a>
+                                            </div>
                                         );
                                     })}
                                 </div>

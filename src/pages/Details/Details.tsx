@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { API_URL, PROJECTS } from "../../../env.ts";
 import type { ProjectType } from "../../model/ProjectType.ts";
 import { ArrowLeft } from "lucide-react";
+import ImageCarousel from "../../ui/Carousel/ImageCarousel.tsx";
 
 function Section({title, children}: { title: string; children: React.ReactNode }) {
     return (
@@ -45,6 +46,8 @@ function Details() {
 
     const {name, overview, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
     const cover = images?.default;
+    const showcase = images?.showcase ? [{ src: cover, alt: `${name} cover`, caption: "" }, ...images.showcase] : cover ? [{ src: cover, alt: `${name} cover`, caption: "" }] : [];
+
     const linksSafe = links || {};
     const linkList = Object.keys(linksSafe);
     const archItems = [
@@ -72,7 +75,7 @@ function Details() {
                     {/* Cover */}
                     {cover && (
                         <div className="w-full aspect-video overflow-hidden">
-                            <img src={cover} alt={`${name} cover`} className="w-full h-full object-cover"/>
+                            {showcase &&  <ImageCarousel images={showcase} />}
                         </div>
                     )}
                     <div className="p-6 space-y-6">
