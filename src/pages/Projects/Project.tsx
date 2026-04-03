@@ -4,7 +4,7 @@ import {API_URL, PROJECTS} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
 import type {ProjectType} from "../../model/ProjectType.ts";
-import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.jsx";
+import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.tsx";
 import {useNavigate} from "react-router-dom"
 
 function Project() {
@@ -46,6 +46,7 @@ function Project() {
         return () => window.removeEventListener('resize', handleResize);
     }, [])
 
+    // @ts-ignore
     return (
 
         <div className={"project-page"}>

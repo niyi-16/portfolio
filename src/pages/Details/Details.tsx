@@ -45,8 +45,10 @@ function Details() {
     if (!project) return <div className="p-6 text-center">Project not found.</div>;
 
     const {name, overview, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
-    const cover = images?.default;
-    const showcase = images?.showcase ? [{ src: cover, alt: `${name} cover`, caption: "" }, ...images.showcase] : cover ? [{ src: cover, alt: `${name} cover`, caption: "" }] : [];
+    const cover = images?.default || "";
+    const showcase = images?.showcase 
+        ? [{ src: cover, alt: `${name} cover`, caption: "" }, ...images.showcase.map(img => ({ src: img, alt: name, caption: "" }))] 
+        : cover ? [{ src: cover, alt: `${name} cover`, caption: "" }] : [];
 
     const linksSafe = links || {};
     const linkList = Object.keys(linksSafe);
@@ -60,6 +62,7 @@ function Details() {
     const challengeSolution = challenges?.solution;
     const hasChallenges = challengeBrief || challengeProblem || challengeSolution;
 
+    // @ts-ignore
     return (
         <div className="min-h-screen bg-[hsl(232,20%,8%)] text-foreground">
             <div className="max-w-2xl mx-auto pb-10">

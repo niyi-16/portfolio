@@ -3,5 +3,5 @@ export interface Contact {
     id: number,
     name: string,
     url: string
-    logo: string | IconType
+    logo: IconType | string
 }
