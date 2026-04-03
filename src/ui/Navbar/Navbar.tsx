@@ -11,7 +11,7 @@ const platforms: Contact[] = [
     {
         id: 1,
         name: "LinkedIn",
-        url: "www.linkedin.com/in/dasil-adam",
+        url: "https://www.linkedin.com/in/dasil-adam",
         logo: svgPath.linkedin
     },
     {
