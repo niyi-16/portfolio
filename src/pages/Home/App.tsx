@@ -34,7 +34,21 @@ const sampleProject = {
 };
 
 function App() {
-      const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState({state: false, project: null});
+    const [recentProject, setRecentProject] = useState<ProjectType[]>(null);
+
+    useEffect(() => {
+        const getProjects = async () => {
+            // setLoading(true)
+            const response = await fetch(API_URL + PROJECTS + `?recents=${1}`)
+            return response.json()
+        }
+
+        getProjects().then((data) => {
+            setRecentProject(data)
+            // setLoading(false)
+        })
+    }, [])
 
     return (
         <div className="min-h-screen bg-background text-foreground">
@@ -79,24 +93,29 @@ function App() {
             </div>
 
             {/* Projects */}
-            <section className="mx-auto max-w-5xl px-6 pb-20">
-                <h2 className="mb-6 text-xl font-semibold underline underline-offset-4 decoration-primary">
-                    Recent projects
-                </h2>
-                <div className="flex flex-wrap gap-6">
-                    <ProjectCard
-                        name={sampleProject.name}
-                        short_desc={sampleProject.short_desc}
-                        stack={sampleProject.stack}
-                        links={sampleProject.links}
-                        images={sampleProject.images}
-                        onClick={() => setModalOpen(true)}
-                    />
-                </div>
-            </section>
-
-            <ProjectModal open={modalOpen} onOpenChange={setModalOpen} project={sampleProject}/>
-
+            {recentProject && recentProject.length > 0 && (
+                <>
+                    <section className="mx-auto max-w-5xl px-6 pb-20">
+                        <h2 className="mb-6 text-xl font-semibold underline underline-offset-4 decoration-primary">
+                            My Recent Works...
+                        </h2>
+                        <div className="flex gap-6 overflow-x-scroll">
+                            {recentProject.map(sampleProject => (
+                                <ProjectCard
+                                    key={sampleProject._id}
+                                    name={sampleProject.name}
+                                    short_desc={sampleProject.short_desc}
+                                    stack={sampleProject.stack}
+                                    links={sampleProject.links}
+                                    images={sampleProject.images}
+                                    onClick={() => setModalOpen({state: true, project: sampleProject})}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                    <ProjectModal open={modalOpen.state} onOpenChange={setModalOpen} project={modalOpen.project}/>
+                </>
+            )}
         </div>
     )
 }

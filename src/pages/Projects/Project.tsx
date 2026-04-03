@@ -19,7 +19,7 @@ function Project() {
     useEffect(() => {
         const getProjects = async () => {
             setLoading(true)
-            const response = await fetch(API_URL + PROJECTS)
+            const response = await fetch(API_URL + PROJECTS +`?show=${1}`)
             return response.json()
         }
 
