@@ -41,11 +41,21 @@
   padding: 2rem 0;
   width: var.$body-width-large;
   margin: 0 auto;
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 340px);
   justify-content: center;
+  gap: 2rem;
   overflow-y: scroll;
   flex: 1;
+}
+@media screen and (max-width: 768px) {
+  .project-container, .filter-container, .project-page {
+    width: 100%;
+  }
 
+  .filter-container{
+      input{
+        margin-right: 1rem;
+      }
+  }
 }

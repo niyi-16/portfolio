@@ -1,6 +1,6 @@
 import './ProjectCard.scss'
 // import { Link} from "react-router-dom"
-import {icons} from "../../../icons.ts"
+import {svg, icons} from "../../../icons.tsx"
 
 type ProjectCardProps = {
     name: string
@@ -8,15 +8,15 @@ type ProjectCardProps = {
     stack: string[]
     links?: Record<string, string>,
     images?:Record<string, string>,
-    onClick: () => void
-}
+    onClick: () => void;
+};
 
 function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectCardProps) {
     const cover = images?.default
-    const link_list = Object.keys(links as Record<string, string>)
+    const linksSafe = links || {};
+    const link_list = Object.keys(linksSafe);
 
     return (
-        // @ts-ignore
         <article className="project-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : undefined }}>
             <div className="project-card__media">
                 {cover ? (
@@ -46,9 +46,10 @@ function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectC
 
                 <div className={"project-card__footer"} >
                     {link_list.map((link:string, index) => (
-                        // @ts-ignore
-                        <a className={"project-card__icon-link"} key={index} href={link_list[link]} target="_blank">
+                        <a className={"project-card__icon-link"} key={index} href={linksSafe[link]} target="_blank">
+                            {svg({ icon: link, size: 24, color: ""}) ??
                             <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
+                            }
                         </a>
                     ))}
                 </div>

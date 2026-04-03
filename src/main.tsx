@@ -11,6 +11,7 @@ import Navbar from "../src/ui/Navbar/Navbar.tsx"
 import {Project} from "./pages/Projects/Project.tsx";
 
 import {BASE} from "../env.ts";
+import Details from "./pages/Details/Details.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
                 <Routes>
                     <Route path="/" element={<App/>}></Route>
                     <Route path="/projects" element={<Project/>}></Route>
+                    <Route path="/projects/details/:id" element={<Details/>}></Route>
                 </Routes>
             </div>
         </Router>
