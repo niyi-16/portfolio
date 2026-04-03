@@ -4,6 +4,7 @@ import {API_URL, PROJECTS} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
 import type {ProjectType} from "../../model/ProjectType.ts";
+import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.jsx";
 import {useNavigate} from "react-router-dom"
 
 function Project() {
@@ -12,16 +13,19 @@ function Project() {
     const [search, setSearch] = useState("")
     const [projects, setProjects] = useState<ProjectType[]>([])
     const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
+    const [loading, setLoading] = useState(false)
 
     /*Get Projects from API*/
     useEffect(() => {
         const getProjects = async () => {
+            setLoading(true)
             const response = await fetch(API_URL + PROJECTS)
             return response.json()
         }
 
         getProjects().then((data) => {
             setProjects(data)
+            setLoading(false)
         })
     }, [])
 
@@ -56,32 +60,38 @@ function Project() {
 
             </div>
             <div className={"project-container"}>
-                {
-                    filteredProjects.map((project: ProjectType) =>
-                        <div key={project._id}>
-                            <ProjectCard 
-                                         name={project.name}
-                                         short_desc={project.short_desc}
-                                         stack={project.stack}
-                                         links={project.links}
-                                         images={project.images}
-                                         onClick={()=> {
-                                             if (devWidth < 768) {
-                                                 navigate(`/projects/details/${project._id}`, { state: { project } })
-                                             }
-                                             else {
-                                                 setSelectedProject(project)
-                                             }
-                                         }}
-                            />
+                {loading ?
+                    (<LoadingIcon cls={"col-span-3"}/>)
+                    :
+                    (filteredProjects.length > 0 ?
+                            filteredProjects.map((project: ProjectType) =>
+                                <div key={project._id}>
+                                    <ProjectCard
+                                        name={project.name}
+                                        short_desc={project.short_desc}
+                                        stack={project.stack}
+                                        links={project.links}
+                                        images={project.images}
+                                        onClick={() => {
+                                            if (devWidth < 768) {
+                                                navigate(`/projects/details/${project._id}`, {state: {project}})
+                                            } else {
+                                                setSelectedProject(project)
+                                            }
+                                        }}
+                                    />
 
-                            {/*TOdo: fix modal*/}
-                            {selectedProject && selectedProject._id === project._id && (
-                                <ProjectModal project = {selectedProject} onOpenChange={(open:unknown) => {
-                                    if (!open) setSelectedProject(null)
-                                }} open={!!selectedProject}/>
-                            )}
-                        </div>
+                                    {selectedProject && selectedProject._id === project._id && (
+                                        <ProjectModal project={selectedProject} onOpenChange={(open: unknown) => {
+                                            if (!open) setSelectedProject(null)
+                                        }} open={!!selectedProject}/>
+                                    )}
+                                </div>
+                            )
+                            :
+                            <p style={{color: 'white'}}>Unfortunately don't think i have worked with such just yet, but
+                                I am always open to new challenges </p>
+
                     )}
             </div>
         </div>
