@@ -118,6 +118,7 @@
     color: rgba(46, 71, 89, 0.92);
     text-decoration: none;
     background-color: #ff45;
+    visibility: hidden;
     transition: transform 150ms ease, filter 150ms ease;
 
     &:hover {
