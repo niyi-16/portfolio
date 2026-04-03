@@ -9,8 +9,8 @@ import HeroSplit from "../../ui/loveable/Hero.tsx";
 
 
 function App() {
-    const [modalOpen, setModalOpen] = useState({state: false, project: null});
-    const [recentProject, setRecentProject] = useState<ProjectType[]>(null);
+    const [modalOpen, setModalOpen] = useState({state: false, project: {}});
+    const [recentProject, setRecentProject] = useState<ProjectType[]>([]);
 
     useEffect(() => {
         const getProjects = async () => {
@@ -25,6 +25,7 @@ function App() {
         })
     }, [])
 
+    // @ts-ignore
     return (
         <div className="min-h-screen bg-background text-foreground">
             {/* About Me */}

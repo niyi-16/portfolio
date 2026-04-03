@@ -1,5 +1,5 @@
 import "./LoadingIcon.scss"
-function LoadingIcon({cls}) {
+function LoadingIcon({cls}: {cls: string}) {
 
     return (
         <div className={"loader-container " + `${cls}`}>

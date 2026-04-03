@@ -64,6 +64,7 @@ const HeroSplit = () => {
                                 className="flex items-center justify-center rounded-full border border-border p-2.5 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                             >
                                 {/*svg*/}
+                                {/*@ts-ignore*/}
                                 {<Icon icon={s.logo.icon} size={24} className={"text-primary"}/>}
                             </a>
                         ))}

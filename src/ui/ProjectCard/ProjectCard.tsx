@@ -7,7 +7,7 @@ type ProjectCardProps = {
     short_desc: string
     stack: string[]
     links?: Record<string, string>,
-    images?:Record<string, string>,
+    images?: { default?: string, showcase?: string[] },
     onClick: () => void;
 };
 
@@ -17,9 +17,11 @@ function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectC
     const link_list = Object.keys(linksSafe);
 
     return (
+        //@ts-ignore
         <article className="project-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : undefined }}>
             <div className="project-card__media">
                 {cover ? (
+        //@ts-ignore
                     <img className="project-card__image" src={cover} alt={`${name} cover`} loading="lazy"/>
                 ) : (
                     <div className="project-card__placeholder" aria-hidden="true"/>
