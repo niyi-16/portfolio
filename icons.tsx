@@ -36,6 +36,15 @@ const svgPath: Record<string, IconType> ={
     "document": {
         icon: `${BASE}/document.svg#document`,
     },
+    "terminal": {
+        icon: `${BASE}/terminal.svg#terminal`,
+    },
+    "database": {
+        icon: `${BASE}/database.svg#database`,
+    },
+    "cloud":    {
+        icon: `${BASE}/cloud.svg#cloud`,
+    },
 }
 const Icon = ({ icon, size, color, className}: { icon:string, size?: number, color?: string, className?: string }) => (
     <svg
@@ -56,4 +65,4 @@ const svg=  ({ icon, size, color, className}: { icon:string, size?: number, colo
     return <Icon icon={svgPath[icon].icon} size={svgPath[icon].size ?? size} color={svgPath[icon].defaultColor ?? color} />
 }
 
-export {icons, svg, svgPath}
+export {icons, svg, svgPath ,Icon}
