@@ -97,12 +97,12 @@ function ProjectModal({open, onOpenChange, project}: any) {
                         <Section title="Architecture">
                             <div className="grid gap-3 sm:grid-cols-3">
                                 {archItems.map(({label, items}) => (
-                                    <div key={label} className="space-y-1.5">
-                                        <p className="text-xs font-medium text-muted-foreground">{label}</p>
-                                        <div className="flex flex-wrap gap-1.5">
+                                    <div key={label} className="space-y-1.5 p-3 rounded-lg bg-accent/10 border border-border/20">
+                                        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground/80">{label}</p>
+                                        <div className="flex flex-wrap gap-2">
                                             {items.map((item:string) => (
                                                 <span key={item}
-                                                      className="px-2 py-1 text-xs rounded bg-accent/20 text-foreground/80">
+                                                      className="px-2 py-1 text-xs font-medium rounded bg-accent/30 text-foreground/90 border border-border/30">
                                                   {item}
                                                 </span>
                                             ))}

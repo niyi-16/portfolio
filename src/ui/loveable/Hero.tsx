@@ -1,6 +1,7 @@
 import {Icon, svgPath} from "../../../icons.tsx";
 import {Terminal, Database, Cloud } from "lucide-react";
 import type {Contact} from "../../model/Contact.ts";
+import {BASE} from "../../../env.ts";
 
 const HeroSplit = () => {
   /*  const bio = {
@@ -33,6 +34,12 @@ const HeroSplit = () => {
             url: "mailto:dasil.adam@gmail.com",
             logo: svgPath.email
         },
+        {
+            id: 4,
+            name: "Resume",
+            url: BASE+"Dasil_Resume_2026_03.pdf",
+            logo: svgPath.document
+        }
 
     ]
 
@@ -85,9 +92,9 @@ const HeroSplit = () => {
 
                 {/* Right: bio */}
                 <div className="space-y-4">
-                    <p className="text-sm leading-relaxed text-foreground/90">{bio.intro}</p>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{bio.interests}</p>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{bio.goals}</p>
+                    <p className="hover:text-primary text-[14pt] leading-relaxed text-foreground/90">{bio.intro}</p>
+                    <p className="hover:text-primary text-[14pt] leading-relaxed text-foreground/90">{bio.interests}</p>
+                    <p className="hover:text-primary text-[14pt] leading-relaxed text-foreground/90">{bio.goals}</p>
                 </div>
             </div>
         </section>

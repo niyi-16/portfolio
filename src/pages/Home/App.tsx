@@ -6,6 +6,7 @@ import {useState, useEffect} from "react";
 import {API_URL, PROJECTS} from "../../../env.ts";
 import type {ProjectType} from "../../model/ProjectType.ts";
 import HeroSplit from "../../ui/loveable/Hero.tsx";
+import { Link } from "react-router-dom";
 
 
 function App() {
@@ -52,9 +53,12 @@ function App() {
             {recentProject && recentProject.length > 0 && (
                 <>
                     <section className="mx-auto max-w-5xl px-6 pb-20">
-                        <h2 className="mb-6 text-xl font-semibold underline underline-offset-4 decoration-primary">
-                            My Recent Works...
-                        </h2>
+                        <div className={"flex justify-between items-center mb-12"}>
+                            <h2 className="mb-6 text-xl font-semibold underline underline-offset-4 decoration-primary"> Recent Projects</h2>
+                            <Link to="/projects" className={"text-primary hover:text-primary/80"}>
+                                <h2 className={"mb-6 text-xl font-semibold underline underline-offset-4 decoration-primary"}> See more</h2>
+                            </Link>
+                        </div>
                         <div className="flex gap-6 overflow-x-scroll">
                             {recentProject.map(sampleProject => (
                                 <ProjectCard

@@ -1,6 +1,6 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import {HashRouter as Router, Routes, Route} from 'react-router-dom'
 
 //Style Sheet
 import './main.scss'
@@ -10,12 +10,12 @@ import App from './pages/Home/App.tsx'
 import Navbar from "../src/ui/Navbar/Navbar.tsx"
 import {Project} from "./pages/Projects/Project.tsx";
 
-import {BASE} from "../env.ts";
+// import {BASE} from "../env.ts";
 import Details from "./pages/Details/Details.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <Router basename={BASE}>
+        <Router basename={"/"}>
             <Navbar/>
             <div className={"main-content"}>
                 <Routes>

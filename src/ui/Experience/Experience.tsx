@@ -135,10 +135,11 @@ const MiniEducation = ({education}: { education: Education }) => {
             <div className="flex shrink-0 items-center gap-2">
                 <Badge
                     variant="outline"
-                    className={`text-[10px] ${statusColor(education.status)}`}
+                    className={`text-[14px] ${statusColor(education.status)}`}
                     content={education.status}
+                    style={education.status === "null"? { opacity: 0 } : undefined}
                 />
-                <span className="hidden text-[11px] text-muted-foreground lg:inline">
+                <span className="hidden text-[14px] text-muted-foreground lg:inline">
           {formatDate(education.start_date)} – {formatDate(education.end_date)}
         </span>
             </div>
@@ -167,10 +168,10 @@ function MiniExperience({experience}: { experience: ExperienceType }) {
                 <div className="flex shrink-0 items-center gap-2">
                     {experience.current && (
                         <Badge variant="outline"
-                               className="bg-primary/20 text-primary border-primary/30 text-[10px]"
+                               className="bg-primary/20 text-primary border-primary/30 text-[14px]"
                                content="Current"
                         />)}
-                    <span className="hidden text-[11px] text-muted-foreground lg:inline">
+                    <span className="hidden text-[14px] text-muted-foreground lg:inline">
                         {formatDate(experience.start_date)} – {formatDate(experience.end_date)}
                     </span>
                     <ChevronDown
@@ -195,13 +196,13 @@ function MiniExperience({experience}: { experience: ExperienceType }) {
                     </div>
 
                     {experience.summary && (
-                        <p className="text-sm leading-relaxed text-muted-foreground">
+                        <p className=" leading-relaxed text-primary">
                             {experience.summary}
                         </p>
                     )}
 
                     {experience.responsibilities.length > 0 && (
-                        <ul className="list-disc space-y-1 pl-4 text-sm text-muted-foreground">
+                        <ul className="list-disc space-y-1 pl-4  text-muted-foreground">
                             {experience.responsibilities.map((r, i) => (
                                 <li key={i}>{r}</li>
                             ))}
