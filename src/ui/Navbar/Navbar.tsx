@@ -3,7 +3,6 @@ import {Dropdown} from "../Dropdown/Dropdown.tsx";
 import type {Contact} from "../../model/Contact.ts";
 import {svgPath} from "../../../icons.tsx";
 import {Link} from "react-router-dom";
-import {BASE} from "../../../env.ts";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -29,7 +28,7 @@ const platforms: Contact[] = [
     {
         id: 4,
         name: "Resume",
-        url: BASE+"Dasil_Resume_2026_03.pdf",
+        url: "https://dasil-image-bucket.s3.us-east-2.amazonaws.com/docs/Dasil_Adam_Resume.pdf",
         logo: svgPath.document
     }
 ]
@@ -45,11 +44,9 @@ function Navbar() {
     }, []);
 
     // Close menu when resizing to desktop
-    useEffect(() => {
-        if (devWidth >= 768 && isMenuOpen) {
-            setIsMenuOpen(false);
-        }
-    }, [devWidth, isMenuOpen]);
+    if (devWidth >= 768 && isMenuOpen) {
+        setIsMenuOpen(false);
+    }
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 

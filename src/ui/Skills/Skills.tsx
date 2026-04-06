@@ -3,7 +3,7 @@ function Skills() {
     const skills: Record<string, string[]> = {
         "Tools & Platforms": ["Git", "Linux", "Docker", "Azure", "AWS"],
         "Web-Frameworks": ["Angular", "React", ".NET", "SpringBoot"],
-        "Programming Languages": ["Java", "Python", "C#", "SQL", "PHP"],
+        "Programming Languages": ["Java","Kotlin", "Python","C#", "SQL", "PHP", "TypeScript"],
         // "Data Analytics": ["Linear Algebra", "R", "Data Calculus", "Microsoft Excel"],
         "Databases": ["MySQL", "MSSQL", "MongoDB", "PostgresSQL"],
     }

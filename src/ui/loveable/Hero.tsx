@@ -1,7 +1,6 @@
 import {Icon, svgPath} from "../../../icons.tsx";
 import {Terminal, Database, Cloud } from "lucide-react";
 import type {Contact} from "../../model/Contact.ts";
-import {BASE} from "../../../env.ts";
 
 const HeroSplit = () => {
   /*  const bio = {
@@ -11,9 +10,13 @@ const HeroSplit = () => {
     }*/
 
     const bio = {
-        intro: "Hey, I'm Dasil, a soon-to-be graduate of the IT Programming program at NSCC, with earlier studies in Computer Science at Dalhousie. I enjoy building systems that are both practical and well structured, whether that means designing backend services, working across the full stack, or deploying applications to the cloud.",
+        intro: "Hi, I'm Dasil, a soon-to-be graduate of the IT Programming program at NSCC, with earlier studies in" +
+            " Computer Science at Dalhousie. I enjoy building systems that are practical and well structured," +
+            " whether that means designing backend services, working across the full stack, or deploying applications to the cloud.",
         interests: "My main interests lie in backend engineering and data analytics, where I enjoy thinking about how systems interact, how data flows, and how software can be designed to scale and evolve over time.",
-        goals: "Long term, I hope to grow into leadership roles such as project or engineering management once I've gained enough experience building and working on complex systems. Until then, I'm focused on learning, building meaningful tools, and collaborating with people who enjoy solving challenging problems.",
+        goals: "Long term, I hope to grow into leadership roles such as project or engineering management once I've" +
+            " gained enough experience building and working on systems. Until then, I'm focused on learning," +
+            " building tools, and collaborating with people who enjoy challenging problems.",
     };
     const socialLinks: Contact[] = [
         {
@@ -37,7 +40,7 @@ const HeroSplit = () => {
         {
             id: 4,
             name: "Resume",
-            url: BASE+"Dasil_Resume_2026_03.pdf",
+            url: "https://dasil-image-bucket.s3.us-east-2.amazonaws.com/docs/Dasil_Adam_Resume.pdf",
             logo: svgPath.document
         }
 
@@ -68,6 +71,7 @@ const HeroSplit = () => {
                             <a
                                 key={s.id}
                                 href={s.url}
+                                target={"_blank"}
                                 className="flex items-center justify-center rounded-full border border-border p-2.5 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                             >
                                 {/*svg*/}
