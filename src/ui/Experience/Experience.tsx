@@ -138,7 +138,7 @@ const MiniEducation = ({education}: { education: Education }) => {
                     variant="outline"
                     className={`text-[14px] ${statusColor(education.status)}`}
                     content={education.status}
-                    style={education.status === "null"? { opacity: 0 } : undefined}
+                    style={education.status === "null" ? {opacity: 0} : undefined}
                 />
                 <span className="hidden text-[14px] text-muted-foreground lg:inline">
           {formatDate(education.start_date)} – {formatDate(education.end_date)}
@@ -185,42 +185,42 @@ function MiniExperience({experience}: { experience: ExperienceType }) {
             {
                 <Expandable open={open}>
 
-                <div className="border-t border-border px-5 pb-4 pt-3 space-y-3">
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                    <div className="border-t border-border px-5 pb-4 pt-3 space-y-3">
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">
                             <MapPin className="h-3 w-3"/>
                             {experience.location.province}, {experience.location.country}
                         </span>
-                        <span className="flex items-center gap-1">
+                            <span className="flex items-center gap-1">
                             <Calendar className="h-3 w-3"/>
-                            {formatDate(experience.start_date)} – {formatDate(experience.end_date)}
+                                {formatDate(experience.start_date)} – {formatDate(experience.end_date)}
                         </span>
-                        <span className="capitalize">{experience.employment_type}</span>
-                    </div>
-
-                    {experience.summary && (
-                        <p className=" leading-relaxed text-primary">
-                            {experience.summary}
-                        </p>
-                    )}
-
-                    {experience.responsibilities.length > 0 && (
-                        <ul className="list-disc space-y-1 pl-4  text-muted-foreground">
-                            {experience.responsibilities.map((r, i) => (
-                                <li key={i}>{r}</li>
-                            ))}
-                        </ul>
-                    )}
-
-                    {experience.skills.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
-                            {experience.skills.map((skill) => (
-                                <Badge key={skill} variant="secondary" className="text-[10px]">
-                                    {skill}
-                                </Badge>
-                            ))}
+                            <span className="capitalize">{experience.employment_type}</span>
                         </div>
-                    )}
+
+                        {experience.summary && (
+                            <p className=" leading-relaxed text-primary">
+                                {experience.summary}
+                            </p>
+                        )}
+
+                        {experience.responsibilities.length > 0 && (
+                            <ul className="list-disc space-y-1 pl-4  text-muted-foreground">
+                                {experience.responsibilities.map((r, i) => (
+                                    <li key={i}>{r}</li>
+                                ))}
+                            </ul>
+                        )}
+
+                        {experience.skills.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5">
+                                {experience.skills.map((skill) => (
+                                    <Badge key={skill} variant="secondary" className="text-[10px]">
+                                        {skill}
+                                    </Badge>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </Expandable>
             }

@@ -7,7 +7,8 @@ import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.tsx";
 import {useNavigate} from "react-router-dom"
 import {SideBarCard} from "../../ui/ProjectCard/SideBarCard.tsx";
 import BigDisplay from "../../ui/ProjectCard/BigDisplay.tsx";
-import ScrollArea from "../../ui/ScrollArea.tsx";
+import {Expandable, Section} from "../../ui/Dom/Dom.tsx";
+import {ChevronDown} from "lucide-react";
 
 function Project() {
     const navigate = useNavigate()
@@ -17,8 +18,12 @@ function Project() {
     const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
     const [loading, setLoading] = useState(false)
 
-    const views = ["default", "expanded"]
-    const [view, setView] = useState(views[0])
+    const isExpanded = !!selectedProject
+    const [tracker, setTracker] = useState( {
+        features: false,
+        lessons: false,
+        links: false,
+    })
     /*Get Projects from API*/
     useEffect(() => {
         const getProjects = async () => {
@@ -135,63 +140,70 @@ function Project() {
                     )}
                 </aside>
 
-                <aside className={"stack max-w-1/3 p-3 bg-teal-300"}>
-                    {selectedProject && (<div className="col-span-3 h-full">
-                        <ScrollArea className="h-full pl-2">
-                            {selectedProject && (
-                                <div className="space-y-6">
+                <aside className={"stack"}>
+                    <div className="h-full p-3">
+                        {selectedProject && (
+                            <div className="space-y-6">
+                                {/*Stack*/}
 
-                                    {/*Stack*/}
-                                    <section>
-                                        <h2 className="text-sm font-semibold mb-2">Stack</h2>
-                                        <div className="project-card__tech" aria-label="Tech stack">
-                                            {selectedProject.stack?.map((t) => (
-                                                <span key={t} className="project-card__techItem">
-                                                    {t}
-                                                </span>
-                                            ))}
+                                {selectedProject.features && (
+
+                                    <Section title={
+                                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setTracker({...tracker, features: !tracker.features})}>
+                                            <span>Features</span>
+                                            <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
+                                                ${tracker.features ? "rotate-180" : ""}`}/>
                                         </div>
-                                    </section>
+                                    }>
 
-                                    {selectedProject.features && (
-                                        <section>
-                                            <h2 className="text-lg font-semibold mb-2">Features</h2>
-                                            <ul className="list-disc list-inside text-sm text-neutral-300 space-y-1">
-                                                {selectedProject.features.map((f, i) => (
+                                        <Expandable open={tracker.features}>
+
+                                            <ul className="list-disc list-inside space-y-1 text-[11pt] text-foreground/80">
+                                                {selectedProject.features.map((f: string, i: number) => (
                                                     <li key={i}>{f}</li>
                                                 ))}
                                             </ul>
-                                        </section>
-                                    )}
+                                        </Expandable>
+                                    </Section>
 
-                                    {selectedProject.lessons && (
-                                        <section>
-                                            <h2 className="text-lg font-semibold mb-2">Lessons</h2>
+
+                                )}
+
+                                {selectedProject.lessons && (
+                                    <Section title={
+                                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setTracker({...tracker, lessons: !tracker.lessons})}>
+                                            <span>Lessons</span>
+                                            <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
+                                                ${tracker.lessons ? "rotate-180" : ""}`}/>
+                                        </div>
+                                    }>
+
+                                        <Expandable open={tracker.lessons}>
                                             <ul className="list-disc list-inside text-sm text-neutral-300 space-y-1">
                                                 {selectedProject.lessons.map((l, i) => (
                                                     <li key={i}>{l}</li>
                                                 ))}
                                             </ul>
-                                        </section>
-                                    )}
+                                        </Expandable>
+                                    </Section>
+                                )}
 
-                                    {selectedProject.links && (
-                                        <section>
-                                            <h2 className="text-lg font-semibold mb-2">Links</h2>
-                                            <div className="flex flex-col gap-2 text-sm">
-                                                {Object.entries(selectedProject.links).map(([key, value]) => (
-                                                    <a key={key} href={value} className="text-blue-400 hover:underline"
-                                                       target="_blank">
-                                                        {key}
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </section>
-                                    )}
-                                </div>
-                            )}
-                        </ScrollArea>
-                    </div>)}
+                                {selectedProject.links && (
+                                    <Section title="Links">
+                                        <div className="flex flex-row gap-2 text-sm">
+                                            {Object.entries(selectedProject.links).map(([key, value]) => (
+                                                <a key={key} href={value}
+                                                   className="text-blue-400 first-letter:uppercase hover:underline"
+                                                   target="_blank">
+                                                    {key}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </Section>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </aside>
             </section>
 

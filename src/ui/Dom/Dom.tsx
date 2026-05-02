@@ -7,7 +7,7 @@ function ScrollArea({children, className}: {children: React.ReactNode, className
     )
 }
 
-function Section({title, children}: { title: string; children: React.ReactNode }) {
+function Section({title, children}: { title: string | React.ReactNode; children: React.ReactNode }) {
     return (
         <div className="space-y-2">
             <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
@@ -27,4 +27,4 @@ function Expandable({title, children, open}: {title?: string, children: React.Re
 }
 
 
-export {ScrollArea, Section}
+export {ScrollArea, Section, Expandable}
