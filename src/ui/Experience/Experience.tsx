@@ -4,6 +4,7 @@ import type {ExperienceType} from "../../model/ExperienceType.ts";
 import {Badge} from "../loveable/badge.tsx";
 import {GraduationCap, Briefcase, MapPin, Calendar, ChevronDown} from "lucide-react";
 import {API_URL, EDUCATION, EXPERIENCE} from "../../../env.ts";
+import {Expandable} from "../Dom/Dom.tsx";
 
 function Experience() {
 
@@ -181,7 +182,9 @@ function MiniExperience({experience}: { experience: ExperienceType }) {
             </div>
 
             {/* Expanded detail */}
-            {open && (
+            {
+                <Expandable open={open}>
+
                 <div className="border-t border-border px-5 pb-4 pt-3 space-y-3">
                     <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">
@@ -218,8 +221,9 @@ function MiniExperience({experience}: { experience: ExperienceType }) {
                             ))}
                         </div>
                     )}
-                </div>
-            )}
+                    </div>
+                </Expandable>
+            }
         </div>
     );
 }

@@ -17,6 +17,14 @@ function Section({title, children}: { title: string; children: React.ReactNode }
         </div>
     );
 }
+// @ts-ignore
+function Expandable({title, children, open}: {title?: string, children: React.ReactNode, open: boolean}) {
+    return (
+        <div className={`${open ? '' : 'hidden'}`}>
+            {children}
+        </div>
+    );
+}
 
 
 export {ScrollArea, Section}
