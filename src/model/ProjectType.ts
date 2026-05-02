@@ -23,3 +23,6 @@ export type ProjectType = {
     "short_desc": string,
     "stack": string[]
 }
+
+export type ProjectMini = Pick<ProjectType,
+    "_id" | "images" | "keywords" | "links" | "stack" | "short_desc">

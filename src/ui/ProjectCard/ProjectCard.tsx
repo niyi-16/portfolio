@@ -1,17 +1,11 @@
 import './ProjectCard.scss'
-// import { Link} from "react-router-dom"
 import {svg, icons} from "../../../icons.tsx"
+import { type ProjectMini } from "../../model/ProjectType.ts";
 
-type ProjectCardProps = {
-    name: string
-    short_desc: string
-    stack: string[]
-    links?: Record<string, string>,
-    images?: { default?: string, showcase?: string[] },
-    onClick: () => void;
-};
 
-function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectCardProps) {
+
+function ProjectCard({project, onClick}: { project: ProjectMini, onClick: () => void}) {
+    const {name, short_desc, stack, links, images} = project;
     const cover = images?.default
     const linksSafe = links || {};
     const link_list = Object.keys(linksSafe);
