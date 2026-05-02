@@ -47,10 +47,10 @@ function ProjectCard({images, stack, links, name, short_desc, onClick}: ProjectC
                 </a>
 
                 <div className={"project-card__footer"} >
-                    {link_list.map((link:string, index) => (
-                        <a className={"project-card__icon-link"} key={index} href={linksSafe[link]} target="_blank">
-                            {svg({ icon: link, size: 24, color: ""}) ??
-                            <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
+                    {link_list.filter(l => l !== "none").map((link, index) => (
+                        <a className="project-card__icon-link" key={index} href={linksSafe[link]} target="_blank">
+                            {svg({ icon: link, size: 24, color: "" }) ??
+                                <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
                             }
                         </a>
                     ))}

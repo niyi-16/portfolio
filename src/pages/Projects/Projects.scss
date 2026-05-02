@@ -16,7 +16,6 @@
   margin: 0 auto;
   width: var.$body-width-large;
   display: flex;
-  justify-content: end;
   padding-bottom: 5px;
   border-bottom: 1px dashed #504f4f;
 
@@ -47,6 +46,25 @@
   gap: 2rem;
   overflow-y: scroll;
   flex: 1;
+}
+
+.expanded-view{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  max-height: calc(100vh - 5rem);
+}
+
+.project-sidebar{
+  padding: 2em;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  //background-color: #f8f4e3;
+  overflow-y: scroll;
+
+
 }
 @media screen and (max-width: 768px) {
   .project-container, .filter-container, .project-page {
