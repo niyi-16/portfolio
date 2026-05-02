@@ -41,8 +41,8 @@ function Project() {
     /*Filter Projects*/
     const filteredProjects = projects.filter(project => {
         const searchable = [
-            ...(project.keywords || []),
-            ...(project.stack || [])
+            ...(project.keywords ?? []),
+            ...(project.stack ?? [])
         ];
         return searchable.some(item =>
             item.toLowerCase().includes(search.toLowerCase())
@@ -55,12 +55,12 @@ function Project() {
         return () => window.removeEventListener('resize', handleResize);
     }, [])
 
-    // @ts-ignore
+    // @ts-expect-error: Legacy layout type incompatibility
     return (
 
         <div className={"project-page"}>
 
-            <div className={"filter-container " + ((selectedProject ? " justify-between": " justify-end"))}>
+            <div className={"filter-container " + ((isExpanded ? " justify-between" : " justify-end"))}>
 
                 {selectedProject && <h1 className={"text-2xl font-bold"}>{selectedProject.name}</h1>}
                 <input type="text"
@@ -73,71 +73,65 @@ function Project() {
 
             </div>
 
-            <section className={view === "default" ? "" : "expanded-view"}>
+            <section className={isExpanded ? "expanded-view" : ""}>
 
                 {/*becomes sidebar when project card is clicked*/}
-                <div className={view === "default" ? "project-container" : "bg-amber-300 project-sidebar min-w-1/9 max-w-1/5"}>
-                    {loading ?
-                        (<LoadingIcon cls={"col-span-3"}/>)
+                <div className={isExpanded ? "project-sidebar" : "project-container"}>
+                    {loading && <LoadingIcon cls={"col-span-3"}/>}
+
+                    {filteredProjects.length > 0 ?
+                        filteredProjects.map((project: ProjectType) =>
+                            <div key={project._id}>
+                                {/*Default view*/}
+                                {!isExpanded &&
+                                    <>
+                                        <ProjectCard
+                                            project={{
+                                                name: project.name,
+                                                short_desc: project.short_desc,
+                                                stack: project.stack,
+                                                links: project.links,
+                                                images: project.images
+                                            }}
+                                            onClick={() => {
+                                                if (devWidth < 768) {
+                                                    navigate(`/projects/details/${project._id}`, {state: {project}})
+                                                } else {
+                                                    setSelectedProject(project)
+                                                }
+                                            }}
+                                        />
+
+                                    </>}
+
+                                {isExpanded &&
+                                    <>
+                                        <SideBarCard
+                                            project={{
+                                                name: project.name,
+                                                short_desc: project.short_desc,
+                                                stack: project.stack,
+                                                links: project.links,
+                                                images: project.images
+                                            }}
+                                            onClick={() => setSelectedProject(project)}
+                                        />
+                                    </>
+                                }
+
+                            </div>
+                        )
                         :
-                        (filteredProjects.length > 0 ?
-                                filteredProjects.map((project: ProjectType) =>
-                                    <div key={project._id}>
-                                        {/*Default view*/}
-                                        {view === "default" &&
-                                            <>
-                                                <ProjectCard
-                                                    name={project.name}
-                                                    short_desc={project.short_desc}
-                                                    stack={project.stack}
-                                                    links={project.links}
-                                                    images={project.images}
-                                                    onClick={() => {
-                                                        if (devWidth < 768) {
-                                                            navigate(`/projects/details/${project._id}`, {state: {project}})
-                                                        } else {
-                                                            setView("expanded")
-                                                            setSelectedProject(project)
-                                                        }
-                                                    }}
-                                                />
+                        <p style={{color: 'white'}} className={"col-span-3 text-center text-lg"}>Unfortunately don't
+                            think i have worked with such just yet,
+                            but I am always open to new challenges </p>
 
-                                                {/* {selectedProject && selectedProject._id === project._id && (
-                                                    <ProjectModal project={selectedProject}
-                                                                  onOpenChange={(open: unknown) => {
-                                                                      if (!open) setSelectedProject(null)
-                                                                  }} open={!!selectedProject}/>
-                                                )}*/}
-                                            </>}
-
-                                        {view === "expanded" &&
-                                            <>
-                                                <SideBarCard
-                                                    name={project.name}
-                                                    short_desc={project.short_desc}
-                                                    stack={project.stack}
-                                                    links={project.links}
-                                                    images={project.images}
-                                                    onClick={() => setSelectedProject(project)}
-                                                />
-                                            </>
-                                        }
-
-                                    </div>
-                                )
-                                :
-                                <p style={{color: 'white'}}>Unfortunately don't think i have worked with such just yet,
-                                    but
-                                    I am always open to new challenges </p>
-
-                        )}
+                    }
                 </div>
 
                 {/*Becomes Middle section when project card is clicked*/}
-                <aside className={"big-display overflow-y-scroll bg-blue-600 max-w-2/3 p-3"}>
-                    {selectedProject && (
-                        <BigDisplay project={selectedProject}/>
-                    )}
+                <aside className={"big-display"}>
+                    {selectedProject && <BigDisplay project={selectedProject}/>}
                 </aside>
 
                 <aside className={"stack"}>

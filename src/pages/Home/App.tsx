@@ -62,12 +62,7 @@ function App() {
                         <div className="flex gap-6 overflow-x-scroll">
                             {recentProject.map(sampleProject => (
                                 <ProjectCard
-                                    key={sampleProject._id}
-                                    name={sampleProject.name}
-                                    short_desc={sampleProject.short_desc}
-                                    stack={sampleProject.stack}
-                                    links={sampleProject.links}
-                                    images={sampleProject.images}
+                                    project={sampleProject}
                                     onClick={() => setModalOpen({state: true, project: sampleProject})}
                                 />
                             ))}

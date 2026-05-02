@@ -6,16 +6,15 @@ type SideBarCardProps = {
     stack: string[]
     links?: Record<string, string>,
     images?: { default?: string, showcase?: string[] },
-    onClick: () => void;
 };
-function SideBarCard({images, stack, links, name, short_desc, onClick}: SideBarCardProps) {
+function SideBarCard({project, onClick}: {project: SideBarCardProps, onClick: () => void }) {
+    const {name, short_desc, stack, images} = project;
 
     return (
         //item start
-        <div className="group flex flex-col max-w-37.5 max-h-37.5 rounded-lg shadow-md overflow-hidden bg-[#12131a]
-        hover:border hover:border-[#12131a] hover:-translate-1 transition-all duration-300 ease"
-             onClick={onClick}
-             style={{ cursor: onClick ? "pointer" : undefined }}>
+        <div className="group cursor-pointer flex flex-col max-w-37.5 max-h-37.5 rounded-lg shadow-md overflow-hidden bg-[#12131a]
+        hover:border hover:border-[#12131a] hover:scale-105 transition-all duration-300 ease"
+             onClick={onClick}>
 
             {/*blur overlay*/}
             <div className={"relative z-1 flex flex-col text-decoration-none"}>
@@ -30,24 +29,20 @@ function SideBarCard({images, stack, links, name, short_desc, onClick}: SideBarC
                          src={images?.default} alt={"Event Image"}/>
 
                     {/*Details overlay*/}
-                    <div className={"absolute inset-0 flex items-center justify-center p-[14px] opacity-0 " +
+                    <div className={"absolute inset-0 flex items-center justify-center p-3.5 opacity-0 " +
                         "transition-opacity duration-200 ease-in-out pointer-events-none group-hover:opacity-100"}>
+
                         <div className={"backdrop-filter-none text-left text-white max-w-[90%] leading-[1.35] [text-shadow:0_2px_6px_rgba(0,0,0,0.5)]"}>
                             <div className={"text-[0.9rem] opacity-95 mb-1.5"}>{short_desc}</div>
 
                             <div className={"text-[0.85rem] opacity-95"}>
-                                <span className={"opacity-85 font-semibold"}>2024-01-01</span>
-                            </div>
-
-                            <div className={"text-[0.85rem] opacity-95"}>
-                                <span className={"opacity-85 font-semibold"}>
-                                    stacked by:
+                                <div className={"flex flex-wrap flex-row gap-1"}>
                                     {stack.map((t, index) => (
-                                        <span key={index} className={"opacity-85 font-semibold ml-1"}>
+                                        <span key={index} className={"font-semibold"}>
                                             {t}
                                         </span>
                                     ))}
-                                </span>
+                                </div>
                             </div>
                         </div>
                     </div>

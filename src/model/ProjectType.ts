@@ -25,4 +25,4 @@ export type ProjectType = {
 }
 
 export type ProjectMini = Pick<ProjectType,
-    "_id" | "images" | "keywords" | "links" | "stack" | "short_desc">
+     "name" | "images" | "keywords" | "links" | "stack" | "short_desc">

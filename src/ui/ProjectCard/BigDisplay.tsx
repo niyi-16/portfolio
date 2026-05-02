@@ -1,23 +1,16 @@
-
 import {icons, svg} from "../../../icons.tsx";
 import ImageCarousel from "../Carousel/ImageCarousel.tsx";
+import {Section} from "../Dom/Dom.tsx";
+import type {ProjectType} from "../../model/ProjectType.ts";
 
-function Section({title, children}: { title: string; children: React.ReactNode }) {
-    return (
-        <div className="space-y-2">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                {title}
-            </h4>
-            {children}
-        </div>
-    );
-}
-
-function BigDisplay({project}: any) {
+function BigDisplay({project}: { project: ProjectType }) {
     if (!project) return null;
     const {name, overview, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
     const cover = images?.default;
-    const showcase = images?.showcase ? [{ src: cover, alt: `${name} cover` }, ...images.showcase] : cover ? [{ src: cover, alt: `${name} cover` }] : [];
+    const showcase = images?.showcase ? [{src: cover, alt: `${name} cover`}, ...images.showcase] : cover ? [{
+        src: cover,
+        alt: `${name} cover`
+    }] : [];
 
     const linksSafe = links || {};
     const linkList = Object.keys(linksSafe);
@@ -32,19 +25,33 @@ function BigDisplay({project}: any) {
     const hasChallenges = challengeBrief || challengeProblem || challengeSolution;
 
     return (
-        <div >
-            <section className="w-full overflow-y-scroll rounded-t-lg  p-6">
+        <div>
+            <section className="w-full rounded-t-lg p-6">
                 {/* Cover */}
                 {cover && (
                     <div className="w-7/9 mx-auto aspect-video overflow-hidden rounded-t-lg bg-black/20">
-                        {showcase &&  <ImageCarousel images={showcase} />}
+                        {showcase && <ImageCarousel images={showcase}/>}
                     </div>
                 )}
-                <div className="p-6 space-y-6">
+                <div className="p-3 space-y-6">
                     {/* Header */}
                     <section className="space-y-3">
-                        <div className="flex items-start justify-between gap-4">
-                            <h1 className="text-2xl font-bold">{name}</h1>
+                        <div className="flex items-start justify-between">
+
+                            {/*Name and stack*/}
+                            <div className="flex flex-wrap items-baseline gap-2">
+                                <h1 className="text-2xl font-bold">{name}</h1>
+                                {stack?.length > 0 && (
+                                    <div className="flex gap-1">
+                                        {stack.map((t: string, i: number) => (
+                                            <span key={t} className="text-[15px] text-accent">
+                                                {t} {(i < stack.length - 1) && <g className="text-muted-foreground">&bull;</g> }
+                                             </span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
                             {linkList.length > 0 && (
                                 <div className="flex gap-1.5 shrink-0">
                                     {linkList.map((link, index) => {
@@ -53,11 +60,13 @@ function BigDisplay({project}: any) {
                                                 key={index}
                                                 aria-label={link}
                                                 title={link}
-                                                className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
+                                                className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:scale-115 transition-all duration-250 ease-in-out"
                                             >
-                                                <a className={"project-card__icon-link"} key={index} href={linksSafe[link]} target="_blank">
+                                                <a className={"project-card__icon-link"} key={index}
+                                                   href={linksSafe[link]} target="_blank">
                                                     {svg({icon: link, size: 24}) ??
-                                                        <img src={icons[link]} alt={`${link} icon`} width={24} height={24}/>
+                                                        <img src={icons[link]} alt={`${link} icon`} width={24}
+                                                             height={24}/>
                                                     }
                                                 </a>
                                             </div>
@@ -71,29 +80,17 @@ function BigDisplay({project}: any) {
                         </section>
                     </section>
 
-                    {/* Stack */}
-                    {stack?.length > 0 && (
-                        <Section title="Tech Stack">
-                            <div className="flex flex-wrap gap-2">
-                                {stack.map((t:string) => (
-                                    <span
-                                        key={t}
-                                        className="px-3 py-1.5 rounded-full text-sm bg-accent/30 border border-border/50 text-foreground/90">
-                                        {t}
-                                    </span>
-                                ))}
-                            </div>
-                        </Section>
-                    )}
+
                     {/* Architecture */}
                     {archItems.length > 0 && (
                         <Section title="Architecture">
                             <div className="grid gap-3 sm:grid-cols-3">
                                 {archItems.map(({label, items}) => (
-                                    <div key={label} className="space-y-1.5 p-3 rounded-lg bg-accent/10 border border-border/20">
+                                    <div key={label}
+                                         className="space-y-1.5 p-3 rounded-lg bg-accent/10 border border-border/20">
                                         <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground/80">{label}</p>
                                         <div className="flex flex-wrap gap-2">
-                                            {items.map((item:string) => (
+                                            {items.map((item: string) => (
                                                 <span key={item}
                                                       className="px-2 py-1 text-xs font-medium rounded bg-accent/30 text-foreground/90 border border-border/30">
                                                   {item}
@@ -105,16 +102,7 @@ function BigDisplay({project}: any) {
                             </div>
                         </Section>
                     )}
-                    {/* Features */}
-                    {features && features.length > 0 && (
-                        <Section title="Features">
-                            <ul className="list-disc list-inside space-y-1 text-sm text-foreground/80">
-                                {features.map((f:string, i:number) => (
-                                    <li key={i}>{f}</li>
-                                ))}
-                            </ul>
-                        </Section>
-                    )}
+
                     {/* Challenges */}
                     {hasChallenges && (
                         <Section title="Challenges">
@@ -135,20 +123,11 @@ function BigDisplay({project}: any) {
                             </div>
                         </Section>
                     )}
-                    {/* Lessons */}
-                    {lessons && lessons.length > 0 && (
-                        <Section title="Lessons Learned">
-                            <ul className="list-disc list-inside space-y-1 text-sm text-foreground/80">
-                                {lessons.map((l:string, i:number) => (
-                                    <li key={i}>{l}</li>
-                                ))}
-                            </ul>
-                        </Section>
-                    )}
+
                     {/* Keywords */}
                     {keywords && keywords.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border/30">
-                            {keywords.map((k:string) => (
+                            {keywords.map((k: string) => (
                                 <span key={k} className="text-xs text-muted-foreground">
                                     #{k}
                                 </span>
