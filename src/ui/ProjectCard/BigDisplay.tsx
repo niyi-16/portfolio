@@ -1,11 +1,13 @@
 import {icons, svg} from "../../../icons.tsx";
 import ImageCarousel from "../Carousel/ImageCarousel.tsx";
-import {Section} from "../Dom/Dom.tsx";
-import type {ProjectType} from "../../model/ProjectType.ts";
+import {Expandable, Section} from "../Dom/Dom.tsx";
+import type {ProjectType, ProjectTypeExtended} from "../../model/ProjectType.ts";
+import {ChevronDown} from "lucide-react";
+import {useState} from "react";
 
-function BigDisplay({project}: { project: ProjectType }) {
+function BigDisplay({project}: { project: ProjectTypeExtended }) {
     if (!project) return null;
-    const {name, overview, stack, links, images, architecture, challenges, features, keywords, lessons} = project;
+    const {name, overview, stack, links, images, architecture, challenges, keywords, process} = project;
     const cover = images?.default;
     const showcase = images?.showcase ? [{src: cover, alt: `${name} cover`}, ...images.showcase] : cover ? [{
         src: cover,
@@ -19,11 +21,18 @@ function BigDisplay({project}: { project: ProjectType }) {
         ...(architecture?.backend?.length ? [{label: "Backend", items: architecture.backend}] : []),
         ...(architecture?.other?.length ? [{label: "Other", items: architecture.other}] : []),
     ];
-    const challengeBrief = challenges?.brief;
-    const challengeProblem = challenges?.problem;
-    const challengeSolution = challenges?.solution;
-    const hasChallenges = challengeBrief || challengeProblem || challengeSolution;
 
+    const challengeStatement = challenges?.statement;
+    const challengeItems = challenges?.items || [];
+    const hasChallenges = !!(challengeStatement || challengeItems.length > 0);
+    const [tracker, setTracker] = useState({
+        planning: true,
+        design: true,
+        development: true,
+        testing: true,
+        deployment: true,
+        maintenance: true,
+    });
     return (
         <div>
             <section className="w-full rounded-t-lg p-6">
@@ -103,23 +112,81 @@ function BigDisplay({project}: { project: ProjectType }) {
                         </Section>
                     )}
 
+                    {/*NEW CONTENT*/}
+
+                    {/*Process*/}
+                    {
+                        process && (
+                            <Section title="The Development Process" titleStyle="{}">
+                                <div className="space-y-3 text-sm text-foreground/80 transition-all duration-200 ease-in-out" >
+
+                                    {/*Planning Section*/}
+                                    {process.planning &&
+                                        <Section title={
+                                            <div className="flex items-center gap-2 cursor-pointer" onClick={() => {setTracker({...tracker, planning: !tracker.planning})}}>
+                                                <span>Planning</span>
+                                                <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
+                                                    ${tracker.planning ? "rotate-180" : ""}`}/>
+                                            </div>
+                                        }>
+                                            <Expandable open={tracker.planning} >
+
+                                            {process.planning.filter(plan => plan).map( (plan, index) =>
+                                                <div className="" key={index}>
+                                                {plan.p && <p className={"text-lg text-foreground/80"}>{plan.p}</p>}
+                                                {plan.img && <img src={plan.img} alt={"plan-"+index} className={"aspect-video object-cover rounded-lg shadow-md"}/>}
+                                            </div>
+
+                                            )}
+                                            </Expandable>
+                                    </Section>
+                                    }
+
+                                    {/*Design Section*/}
+                                    {process.design &&
+                                        <Section title={
+                                            <div className="flex items-center gap-2 cursor-pointer" onClick={() => {setTracker({...tracker, design: !tracker.design})}}>
+                                                <span>Design</span>
+                                                <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
+                                                    ${tracker.design ? "rotate-180" : ""}`}/>
+                                            </div>
+                                        }>
+                                            <Expandable open={tracker.design} >
+
+                                                {process.design.filter(design => design).map( (design, index) =>
+                                                    <div className="" key={index}>
+                                                        {design.p && <p className={"text-lg text-foreground/80"}>{design.p}</p>}
+                                                        {design.img && <img src={design.img} alt={"plan-"+index} className={"aspect-video object-cover rounded-lg shadow-md"}/>}
+                                                    </div>
+
+                                                )}
+                                            </Expandable>
+                                        </Section>
+                                    }
+                                </div>
+                            </Section>
+                        )
+                    }
+
+                    {/*NEW CONTENT*/}
+
                     {/* Challenges */}
                     {hasChallenges && (
                         <Section title="Challenges">
                             <div className="space-y-3 text-sm text-foreground/80">
-                                {challengeBrief && <p>{challengeBrief}</p>}
-                                {challengeProblem && (
-                                    <div>
-                                        <p className="text-xs font-medium text-muted-foreground mb-1">Problem</p>
-                                        <p>{challengeProblem}</p>
+                                {challengeStatement && <p>{challengeStatement}</p>}
+                                {challengeItems.length > 0 && challengeItems.map((item, index: number) => (
+                                    <div key={index} className="space-y-3">
+                                        {Object.entries(item).map(([key, value]) => (
+                                            value && (
+                                                <div key={key}>
+                                                    <p className="text-xs font-medium text-muted-foreground mb-1 capitalize">{key}</p>
+                                                    <p>{value}</p>
+                                                </div>
+                                            )
+                                        ))}
                                     </div>
-                                )}
-                                {challengeSolution && (
-                                    <div>
-                                        <p className="text-xs font-medium text-muted-foreground mb-1">Solution</p>
-                                        <p>{challengeSolution}</p>
-                                    </div>
-                                )}
+                                ))}
                             </div>
                         </Section>
                     )}

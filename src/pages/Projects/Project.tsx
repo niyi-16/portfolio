@@ -2,20 +2,21 @@ import {useState, useEffect} from 'react'
 import './Projects.scss'
 import {API_URL, PROJECTS} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
-import type {ProjectType} from "../../model/ProjectType.ts";
+import type {ProjectType, ProjectTypeExtended} from "../../model/ProjectType.ts";
 import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.tsx";
 import {useNavigate} from "react-router-dom"
 import {SideBarCard} from "../../ui/ProjectCard/SideBarCard.tsx";
 import BigDisplay from "../../ui/ProjectCard/BigDisplay.tsx";
 import {Expandable, Section} from "../../ui/Dom/Dom.tsx";
 import {ChevronDown} from "lucide-react";
+import {Timeline} from "../../ui/Timeline.tsx";
 
 function Project() {
     const navigate = useNavigate()
     const [devWidth, setDevWidth] = useState(window.innerWidth);
     const [search, setSearch] = useState("")
-    const [projects, setProjects] = useState<ProjectType[]>([])
-    const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null)
+    const [projects, setProjects] = useState<ProjectTypeExtended[]>([])
+    const [selectedProject, setSelectedProject] = useState<ProjectTypeExtended | null>(null)
     const [loading, setLoading] = useState(false)
 
     const isExpanded = !!selectedProject
@@ -23,6 +24,7 @@ function Project() {
         features: false,
         lessons: false,
         links: false,
+        timeline: false,
     })
     /*Get Projects from API*/
     useEffect(() => {
@@ -73,7 +75,7 @@ function Project() {
 
             </div>
 
-            <section className={isExpanded ? "expanded-view" : ""}>
+            <section className={"overflow-y-scroll" +  isExpanded ? "expanded-view" : ""}>
 
                 {/*becomes sidebar when project card is clicked*/}
                 <div className={isExpanded ? "project-sidebar" : "project-container"}>
@@ -97,7 +99,7 @@ function Project() {
                                                 if (devWidth < 768) {
                                                     navigate(`/projects/details/${project._id}`, {state: {project}})
                                                 } else {
-                                                    setSelectedProject(project)
+                                                    setSelectedProject(project as ProjectTypeExtended)
                                                 }
                                             }}
                                         />
@@ -114,7 +116,7 @@ function Project() {
                                                 links: project.links,
                                                 images: project.images
                                             }}
-                                            onClick={() => setSelectedProject(project)}
+                                            onClick={() => setSelectedProject(project as ProjectTypeExtended)}
                                         />
                                     </>
                                 }
@@ -130,11 +132,11 @@ function Project() {
                 </div>
 
                 {/*Becomes Middle section when project card is clicked*/}
-                <aside className={"big-display"}>
+                <aside className={isExpanded ? "big-display" : "hidden"}>
                     {selectedProject && <BigDisplay project={selectedProject}/>}
                 </aside>
 
-                <aside className={"stack"}>
+                <aside className={isExpanded ? "stack" : "hidden"}>
                     <div className="h-full p-3">
                         {selectedProject && (
                             <div className="space-y-6">
@@ -193,6 +195,20 @@ function Project() {
                                                 </a>
                                             ))}
                                         </div>
+                                    </Section>
+                                )}
+
+                                {selectedProject.timeline && (
+                                    <Section title={
+                                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setTracker({...tracker, timeline: !tracker.timeline})}>
+                                            <span>Timeline</span>
+                                            <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
+                                                ${tracker.timeline? "rotate-180" : ""}`}/>
+                                        </div>
+                                    }>
+                                        <Expandable open={tracker.timeline}>
+                                            <Timeline timeline={selectedProject.timeline} />
+                                        </Expandable>
                                     </Section>
                                 )}
                             </div>
