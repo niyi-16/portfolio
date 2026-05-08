@@ -1,7 +1,7 @@
 import {icons, svg} from "../../../icons.tsx";
 import ImageCarousel from "../Carousel/ImageCarousel.tsx";
 import {Expandable, Section} from "../Dom/Dom.tsx";
-import type {ProjectType, ProjectTypeExtended} from "../../model/ProjectType.ts";
+import type {ProjectTypeExtended} from "../../model/ProjectType.ts";
 import {ChevronDown} from "lucide-react";
 import {useState} from "react";
 
@@ -84,7 +84,7 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                                 </div>
                             )}
                         </div>
-                        <section className="text-base text-muted-foreground">
+                        <section className="text-lg text-muted-foreground">
                             {overview?.summary}
                         </section>
                     </section>
@@ -93,15 +93,15 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                     {/* Architecture */}
                     {archItems.length > 0 && (
                         <Section title="Architecture">
-                            <div className="grid gap-3 sm:grid-cols-3">
+                            <div className="grid gap-1 sm:grid-cols-3 has-first:border-l first:border-border">
                                 {archItems.map(({label, items}) => (
                                     <div key={label}
-                                         className="space-y-1.5 p-3 rounded-lg bg-accent/10 border border-border/20">
+                                         className="space-y-1.5 p-3 border-r border-border">
                                         <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground/80">{label}</p>
                                         <div className="flex flex-wrap gap-2">
                                             {items.map((item: string) => (
                                                 <span key={item}
-                                                      className="px-2 py-1 text-xs font-medium rounded bg-accent/30 text-foreground/90 border border-border/30">
+                                                      className="text-xs font-medium text-foreground/">
                                                   {item}
                                                 </span>
                                             ))}
@@ -117,8 +117,8 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                     {/*Process*/}
                     {
                         process && (
-                            <Section title="The Development Process" titleStyle="{}">
-                                <div className="space-y-3 text-sm text-foreground/80 transition-all duration-200 ease-in-out" >
+                            <Section title="The Development Process" titleStyle="text-lg font-bold">
+                                <div className="space-y-3 text-foreground/80 transition-all duration-200 ease-in-out" >
 
                                     {/*Planning Section*/}
                                     {process.planning &&

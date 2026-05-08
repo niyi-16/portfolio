@@ -5,17 +5,7 @@ import { API_URL, PROJECTS } from "../../../env.ts";
 import type { ProjectType } from "../../model/ProjectType.ts";
 import { ArrowLeft } from "lucide-react";
 import ImageCarousel from "../../ui/Carousel/ImageCarousel.tsx";
-
-function Section({title, children}: { title: string; children: React.ReactNode }) {
-    return (
-        <div className="space-y-2">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-                {title}
-            </h4>
-            {children}
-        </div>
-    );
-}
+import { Section } from "../../ui/Dom/Dom.tsx";
 
 function Details() {
     const { id } = useParams();

@@ -1,4 +1,6 @@
 import React from "react";
+import { ChevronDown } from "lucide-react";
+
 function ScrollArea({children, className}: {children: React.ReactNode, className?: string}) {
 
     return (
@@ -28,6 +30,20 @@ Section.Append = ({children}: {children: React.ReactNode}) => {
     return (<>{children}</>);
 }
 
+
+const CollapsibleSection = ({ title, children, onClick, watcher }: { title: string; children: React.ReactNode; onClick?: () => void; watcher: boolean }) => (
+    <Section title={
+        <div className="flex items-center gap-2 cursor-pointer select-none" onClick={() =>onClick && onClick()}>
+            <span>{title}</span>
+            <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform duration-200 ${watcher ? "rotate-180" : ""}`} />
+        </div>
+    }>
+        <Expandable open={watcher}>
+            {children}
+        </Expandable>
+    </Section>
+);
+
 // @ts-ignore
 function Expandable({title, children, open}: {title?: string, children: React.ReactNode, open: boolean}) {
     return (
@@ -38,4 +54,4 @@ function Expandable({title, children, open}: {title?: string, children: React.Re
 }
 
 
-export {ScrollArea, Section, Expandable}
+export {ScrollArea, Section, Expandable, CollapsibleSection}

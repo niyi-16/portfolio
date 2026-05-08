@@ -5,11 +5,9 @@ import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import type {ProjectType, ProjectTypeExtended} from "../../model/ProjectType.ts";
 import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.tsx";
 import {useNavigate} from "react-router-dom"
-import {SideBarCard} from "../../ui/ProjectCard/SideBarCard.tsx";
 import BigDisplay from "../../ui/ProjectCard/BigDisplay.tsx";
-import {Expandable, Section} from "../../ui/Dom/Dom.tsx";
-import {ChevronDown} from "lucide-react";
-import {Timeline} from "../../ui/Timeline.tsx";
+import {CollapsibleSection} from "../../ui/Dom/Dom.tsx";
+import {icons, svg} from "../../../icons.tsx";
 
 function Project() {
     const navigate = useNavigate()
@@ -23,9 +21,12 @@ function Project() {
     const [tracker, setTracker] = useState( {
         features: false,
         lessons: false,
-        links: false,
+        links: true,
         timeline: false,
+        keywords: false,
+        metadata: false,
     })
+
     /*Get Projects from API*/
     useEffect(() => {
         const getProjects = async () => {
@@ -57,13 +58,19 @@ function Project() {
         return () => window.removeEventListener('resize', handleResize);
     }, [])
 
-    // @ts-expect-error: Legacy layout type incompatibility
+    const toggleTracker = (key: keyof typeof tracker) =>
+        setTracker(prev => ({ ...prev, [key]: !prev[key] }));
+
+
+    const sp = selectedProject;
+    const linksSafe = sp?.links || {};
+    const linkList = Object.keys(linksSafe);
+
+
+
     return (
-
         <div className={"project-page"}>
-
             <div className={"filter-container " + ((isExpanded ? " justify-between" : " justify-end"))}>
-
                 {selectedProject && <h1 className={"text-2xl font-bold"}>{selectedProject.name}</h1>}
                 <input type="text"
                        placeholder="Search Projects"
@@ -71,149 +78,135 @@ function Project() {
                        value={search}
                        onChange={(e) => setSearch(e.target.value)}
                 />
-
-
             </div>
 
-            <section className={"overflow-y-scroll" +  isExpanded ? "expanded-view" : ""}>
-
-                {/*becomes sidebar when project card is clicked*/}
-                <div className={isExpanded ? "project-sidebar" : "project-container"}>
+            <section className={(isExpanded ? "expanded-view " : "project-container")}>
+                {/* Left Column - Project List */}
+                <div className={isExpanded ? "project-sidebar" : "contents contents-container"}>
+                    {isExpanded && <div className="stroke-white z-70 p-1 w-fit h-fit rounded-2xl bg-white/10
+                         border-teal-500 cursor-pointer hover:bg-white/20 transition-color" onClick={() => setSelectedProject(null)}>
+                        <svg className="w-6 h-6" transform={"translate(1.5,1)"}>
+                            <use href="x.svg#icon"/>
+                        </svg>
+                    </div>}
                     {loading && <LoadingIcon cls={"col-span-3"}/>}
-
                     {filteredProjects.length > 0 ?
-                        filteredProjects.map((project: ProjectType) =>
+                        filteredProjects.map((project: ProjectType) => (
                             <div key={project._id}>
-                                {/*Default view*/}
-                                {!isExpanded &&
-                                    <>
-                                        <ProjectCard
-                                            project={{
-                                                name: project.name,
-                                                short_desc: project.short_desc,
-                                                stack: project.stack,
-                                                links: project.links,
-                                                images: project.images
-                                            }}
-                                            onClick={() => {
-                                                if (devWidth < 768) {
-                                                    navigate(`/projects/details/${project._id}`, {state: {project}})
-                                                } else {
-                                                    setSelectedProject(project as ProjectTypeExtended)
-                                                }
-                                            }}
-                                        />
-
-                                    </>}
-
-                                {isExpanded &&
-                                    <>
-                                        <SideBarCard
-                                            project={{
-                                                name: project.name,
-                                                short_desc: project.short_desc,
-                                                stack: project.stack,
-                                                links: project.links,
-                                                images: project.images
-                                            }}
-                                            onClick={() => setSelectedProject(project as ProjectTypeExtended)}
-                                        />
-                                    </>
-                                }
-
+                                {!isExpanded ? (
+                                    <ProjectCard
+                                        project={{
+                                            name: project.name,
+                                            short_desc: project.short_desc,
+                                            stack: project.stack,
+                                            links: project.links,
+                                            images: project.images
+                                        }}
+                                        onClick={() => {
+                                            if (devWidth < 768) {
+                                                navigate(`/projects/details/${project._id}`, { state: { project } })
+                                            } else {
+                                                setSelectedProject(project as ProjectTypeExtended)
+                                            }
+                                        }}
+                                    />
+                                ) : (
+                                    <div
+                                        className={`compact-sidebar-item ${selectedProject?._id === project._id ? 'active' : ''}`}
+                                        onClick={() => setSelectedProject(project as ProjectTypeExtended)}
+                                    >
+                                        <div className="compact-sidebar-thumb">
+                                            {project.images?.default ? (
+                                                <img src={project.images.default} alt={project.name} />
+                                            ) : (
+                                                <div className="compact-sidebar-placeholder" />
+                                            )}
+                                        </div>
+                                        <div className="compact-sidebar-info">
+                                            <span className="compact-sidebar-name">{project.name}</span>
+                                            <span className="compact-sidebar-stack">
+                                                {project.stack?.slice(0, 3).join(' · ')}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                        )
+                        ))
                         :
-                        <p style={{color: 'white'}} className={"col-span-3 text-center text-lg"}>Unfortunately don't
-                            think i have worked with such just yet,
-                            but I am always open to new challenges </p>
-
+                        <p style={{ color: 'white', display: loading ? "none" : "" }} className="col-span-3 text-center text-lg">
+                            Unfortunately don't think I have worked with such just yet,
+                            but I am always open to new challenges
+                        </p>
                     }
                 </div>
 
-                {/*Becomes Middle section when project card is clicked*/}
-                <aside className={isExpanded ? "big-display" : "hidden"}>
-                    {selectedProject && <BigDisplay project={selectedProject}/>}
-                </aside>
+                {/* Center Column - Primary Project Details */}
+                <div className={isExpanded ? "center-display" : "hidden"}>
+                    {sp && <BigDisplay project={sp} />}
+                </div>
 
-                <aside className={isExpanded ? "stack" : "hidden"}>
-                    <div className="h-full p-3">
-                        {selectedProject && (
-                            <div className="space-y-6">
-                                {/*Stack*/}
+                {/* Right Column - Secondary / Collapsible Info */}
+                <aside className={isExpanded ? "right-panel" : "hidden"}>
+                    {sp && (
+                        <div className="right-panel-inner">
 
-                                {selectedProject.features && (
+                            {/* Status */}
+                            {sp.status && (
+                                <div className="pt-3 border-t border-border/20">
+                                    <div className="flex items-center gap-2">
+                                        <div className={`w-2 h-2 rounded-full ${sp.status === 'active' ? 'bg-green-500' : sp.status === 'in-progress' ? 'bg-yellow-500' : 'bg-muted-foreground/50'}`} />
+                                        <span className="text-xs text-muted-foreground capitalize">{sp.status}</span>
+                                    </div>
+                                </div>
+                            )}
 
-                                    <Section title={
-                                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setTracker({...tracker, features: !tracker.features})}>
-                                            <span>Features</span>
-                                            <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
-                                                ${tracker.features ? "rotate-180" : ""}`}/>
-                                        </div>
-                                    }>
+                            {/* Links - default open */}
+                            {linkList.length > 0 && (
+                                <CollapsibleSection title="Links" onClick={()=>toggleTracker('links')} watcher={tracker.links}>
+                                    <div className="flex flex-wrap gap-2">
+                                        {linkList.map((link, index) => (
+                                            <a key={index} href={linksSafe[link]} target="_blank" rel="noreferrer"
+                                                className="flex flex-col items-center gap-1 text-sm  text-foreground/80 hover:text-accent transition-colors">
+                                                {svg({ icon: link, size: 24 }) ??
+                                                    <img src={icons[link]} alt={link} width={16} height={16} />}
+                                                <span className="capitalize">{link}</span>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </CollapsibleSection>
+                            )}
 
-                                        <Expandable open={tracker.features}>
+                            {/* Features */}
+                            {sp.features && sp.features.length > 0 && (
+                                <CollapsibleSection title="Features" onClick={() => toggleTracker("features")} watcher={tracker.features}>
+                                    <ul className="list-disc list-inside space-y-1 text-xs text-foreground/80">
+                                        {sp.features.map((f: string, i: number) => (
+                                            <li key={i}>{f}</li>
+                                        ))}
+                                    </ul>
+                                </CollapsibleSection >
+                            )}
 
-                                            <ul className="list-disc list-inside space-y-1 text-[11pt] text-foreground/80">
-                                                {selectedProject.features.map((f: string, i: number) => (
-                                                    <li key={i}>{f}</li>
-                                                ))}
-                                            </ul>
-                                        </Expandable>
-                                    </Section>
+                            {/* Lessons */}
+                            {sp.lessons && sp.lessons.length > 0 && (
+                                <CollapsibleSection title="Lessons Learned" watcher={tracker.lessons} onClick={() => toggleTracker("lessons")}>
+                                    <ul className="list-disc list-inside text-xs text-foreground/70 space-y-1">
+                                        {sp.lessons.map((l, i) => (
+                                            <li key={i}>{l}</li>
+                                        ))}
+                                    </ul>
+                                </CollapsibleSection>
+                            )}
 
+                            {/*/!* Timeline *!/*/}
+                            {/*{sp.timeline && sp.timeline.length > 0 && (*/}
+                            {/*    <CollapsibleSection title="Timeline" watcher={tracker.timeline} onClick={() => toggleTracker("timeline")}>*/}
+                            {/*        <Timeline timeline={sp.timeline} />*/}
+                            {/*    </CollapsibleSection>*/}
+                            {/*)}*/}
 
-                                )}
-
-                                {selectedProject.lessons && (
-                                    <Section title={
-                                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setTracker({...tracker, lessons: !tracker.lessons})}>
-                                            <span>Lessons</span>
-                                            <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
-                                                ${tracker.lessons ? "rotate-180" : ""}`}/>
-                                        </div>
-                                    }>
-
-                                        <Expandable open={tracker.lessons}>
-                                            <ul className="list-disc list-inside text-sm text-neutral-300 space-y-1">
-                                                {selectedProject.lessons.map((l, i) => (
-                                                    <li key={i}>{l}</li>
-                                                ))}
-                                            </ul>
-                                        </Expandable>
-                                    </Section>
-                                )}
-
-                                {selectedProject.links && (
-                                    <Section title="Links">
-                                        <div className="flex flex-row gap-2 text-sm">
-                                            {Object.entries(selectedProject.links).map(([key, value]) => (
-                                                <a key={key} href={value}
-                                                   className="text-blue-400 first-letter:uppercase hover:underline"
-                                                   target="_blank">
-                                                    {key}
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </Section>
-                                )}
-
-                                {selectedProject.timeline && (
-                                    <Section title={
-                                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => setTracker({...tracker, timeline: !tracker.timeline})}>
-                                            <span>Timeline</span>
-                                            <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform 
-                                                ${tracker.timeline? "rotate-180" : ""}`}/>
-                                        </div>
-                                    }>
-                                        <Expandable open={tracker.timeline}>
-                                            <Timeline timeline={selectedProject.timeline} />
-                                        </Expandable>
-                                    </Section>
-                                )}
-                            </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </aside>
             </section>
 
