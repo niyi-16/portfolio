@@ -9,14 +9,22 @@ const HeroSplit = () => {
         goals: "My goal is to create innovative and user-friendly solutions that make a positive impact on the world. I'm committed to continuous learning and staying at the forefront of technology trends."
     }*/
 
+    // const bio = {
+    //     intro: "Hi, I'm Dasil, a soon-to-be graduate of the IT Programming program at NSCC, with earlier studies in" +
+    //         " Computer Science at Dalhousie. I enjoy building systems that are practical and well structured," +
+    //         " whether that means designing backend services, working across the full stack, or deploying applications to the cloud.",
+    //     interests: "My main interests lie in backend engineering and data analytics, where I enjoy thinking about how systems interact, how data flows, and how software can be designed to scale and evolve over time.",
+    //     goals: "Long term, I hope to grow into leadership roles such as project or engineering management once I've" +
+    //         " gained enough experience building and working on systems. Until then, I'm focused on learning," +
+    //         " building tools, and collaborating with people who enjoy challenging problems.",
+    // };
     const bio = {
-        intro: "Hi, I'm Dasil, a soon-to-be graduate of the IT Programming program at NSCC, with earlier studies in" +
-            " Computer Science at Dalhousie. I enjoy building systems that are practical and well structured," +
-            " whether that means designing backend services, working across the full stack, or deploying applications to the cloud.",
-        interests: "My main interests lie in backend engineering and data analytics, where I enjoy thinking about how systems interact, how data flows, and how software can be designed to scale and evolve over time.",
-        goals: "Long term, I hope to grow into leadership roles such as project or engineering management once I've" +
-            " gained enough experience building and working on systems. Until then, I'm focused on learning," +
-            " building tools, and collaborating with people who enjoy challenging problems.",
+        intro: "Recent NSCC Graduate with previous studies in Computer Science at Dalhousie University." +
+            " I build scalable and maintainable software systems across the full stack, with experience developing backend services, APIs, databases, and cloud-deployed applications.",
+
+        interests: "My primary focus is backend engineering. I enjoy designing efficient architectures, optimizing data flow, and building software that is reliable, extensible, and aligned with business and user needs.",
+
+        goals: "I’m currently seeking opportunities where I can continue strengthening my software development skills, deliver impactful solutions, and grow into technical leadership roles over time.",
     };
     const socialLinks: Contact[] = [
         {
@@ -34,15 +42,15 @@ const HeroSplit = () => {
         {
             id: 3,
             name: "Email",
-            url: "mailto:dasil.adam@gmail.com",
+            url: "mailto:dasil.adam@outlook.com",
             logo: svgPath.email
         },
-        {
-            id: 4,
-            name: "Resume",
-            url: "https://dasil-image-bucket.s3.us-east-2.amazonaws.com/docs/Dasil_Adam_Resume.pdf",
-            logo: svgPath.document
-        }
+        // {
+        //     id: 4,
+        //     name: "Resume",
+        //     url: "https://dasil-image-bucket.s3.us-east-2.amazonaws.com/docs/Dasil_Adam_Resume.pdf",
+        //     logo: svgPath.document
+        // }
 
     ]
 

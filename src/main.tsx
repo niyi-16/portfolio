@@ -14,7 +14,6 @@ import {Project} from "./pages/Projects/Project.tsx";
 import Details from "./pages/Details/Details.tsx";
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
         <Router basename={"/"}>
             <Navbar/>
             <div className={"main-content"}>
@@ -25,7 +24,4 @@ createRoot(document.getElementById('root')!).render(
                 </Routes>
             </div>
         </Router>
-        {/*<Footer/>*/
-        }
-    </StrictMode>,
 )

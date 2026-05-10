@@ -5,7 +5,7 @@ function Skills() {
         "Web-Frameworks": ["Angular", "React", ".NET", "SpringBoot"],
         "Programming Languages": ["Java","Kotlin", "Python","C#", "SQL", "PHP", "TypeScript"],
         // "Data Analytics": ["Linear Algebra", "R", "Data Calculus", "Microsoft Excel"],
-        "Databases": ["MySQL", "MSSQL", "MongoDB", "PostgresSQL"],
+        "Databases": ["MySQL", "MSSQL", "MongoDB", "PostgreSQL"],
     }
 
     return (

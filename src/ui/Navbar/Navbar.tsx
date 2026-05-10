@@ -22,15 +22,15 @@ const platforms: Contact[] = [
     {
         id: 3,
         name: "Email",
-        url: "mailto:dasil.adam@gmail.com",
+        url: "mailto:dasil.adam@outlook.com",
         logo: svgPath.email
     },
-    {
-        id: 4,
-        name: "Resume",
-        url: "https://dasil-image-bucket.s3.us-east-2.amazonaws.com/docs/Dasil_Adam_Resume.pdf",
-        logo: svgPath.document
-    }
+    // {
+    //     id: 4,
+    //     name: "Resume",
+    //     url: "https://dasil-image-bucket.s3.us-east-2.amazonaws.com/docs/Dasil_Adam_Resume.pdf",
+    //     logo: svgPath.document
+    // }
 ]
 
 function Navbar() {
