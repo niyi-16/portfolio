@@ -4,10 +4,10 @@
 }
 
 .skill-grid{
-  @include var.grid-details;
+  @include grid-details;
 
   h3{
-    @include var.new_h3;
+    @include new_h3;
   }
 
 

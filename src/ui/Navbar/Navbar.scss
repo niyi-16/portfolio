@@ -1,11 +1,11 @@
 .nav-container {
-  background-color: var.$main-color;
+  background-color: $main-color;
   //padding: 0 .3rem;
 
   .main-nav {
     margin: 0 auto;
     display: flex;
-    width: var.$body-width-large;
+    width: $body-width-large;
     height: 7vh;
     justify-content: space-between;
     align-items: center;
@@ -21,12 +21,12 @@
         background: none;
         border: none;
         cursor: pointer;
-        color: var.$secondary-color;
+        color: $secondary-color;
         padding: 0.5rem;
         z-index: 1001;
 
         &:hover {
-          color: var.$link-hover;
+          color: $link-hover;
         }
 
         @media (max-width: 768px) {
@@ -48,15 +48,15 @@
     }
 
     a.header-link, div.header-link {
-      color: var.$secondary-color;
+      color: $secondary-color;
       padding: .5rem;
       font-size: 1.8em;
       text-align: center;
       border-bottom: 3px solid transparent;
 
       &:hover {
-        color: var.$link-hover;
-        border-bottom: 3px solid var.$link-hover;
+        color: $link-hover;
+        border-bottom: 3px solid $link-hover;
         transition: all 0.3s ease-in;
       }
     }
@@ -65,7 +65,7 @@
     // Media Queries for smaller screens
     &{
       @media (max-width: 768px) {
-        width: var.$body-width-small;
+        width: $body-width-small;
 
         .email-container{
           width: 100%;
@@ -86,7 +86,7 @@
     right: -100%;
     width: 250px;
     height: 100vh;
-    background-color: var.$main-color;
+    background-color: $main-color;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
     transition: right 0.3s ease-in-out;
     z-index: 1000;
@@ -107,14 +107,14 @@
         background: none;
         border: none;
         cursor: pointer;
-        color: var.$secondary-color;
+        color: $secondary-color;
         padding: 0.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
 
         &:hover {
-          color: var.$link-hover;
+          color: $link-hover;
         }
       }
     }
@@ -125,14 +125,14 @@
       padding: 1rem;
 
       .mobile-header-link {
-        color: var.$secondary-color;
+        color: $secondary-color;
         padding: 1rem;
         font-size: 1.5rem;
         text-decoration: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
         &:hover {
-          color: var.$link-hover;
+          color: $link-hover;
           background-color: rgba(255, 255, 255, 0.05);
         }
       }
