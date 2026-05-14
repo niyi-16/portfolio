@@ -1,6 +1,6 @@
 import './Navbar.scss'
 import {Dropdown} from "../Dropdown/Dropdown.tsx";
-import type {Contact} from "../../model/Contact.ts";
+import type {Contact} from "../../types/Contact.ts";
 import {svgPath} from "../../../icons.tsx";
 import {Link} from "react-router-dom";
 import { useEffect, useState } from "react";

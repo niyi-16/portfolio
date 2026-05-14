@@ -4,7 +4,7 @@ import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx"
 import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
 import {useState, useEffect} from "react";
 import {API_URL, PROJECTS} from "../../../env.ts";
-import type {ProjectType} from "../../model/ProjectType.ts";
+import type {ProjectType} from "../../types/ProjectType.ts";
 import HeroSplit from "../../ui/loveable/Hero.tsx";
 import {Link} from "react-router-dom";
 

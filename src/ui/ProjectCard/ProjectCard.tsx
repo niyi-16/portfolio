@@ -1,6 +1,6 @@
 import './ProjectCard.scss'
 import {svg, icons} from "../../../icons.tsx"
-import { type ProjectMini } from "../../model/ProjectType.ts";
+import { type ProjectMini } from "../../types/ProjectType.ts";
 
 
 

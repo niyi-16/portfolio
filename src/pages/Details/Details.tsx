@@ -2,7 +2,7 @@ import {icons, svg} from "../../../icons.tsx";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { API_URL, PROJECTS } from "../../../env.ts";
-import type { ProjectType } from "../../model/ProjectType.ts";
+import type { ProjectType } from "../../types/ProjectType.ts";
 import { ArrowLeft } from "lucide-react";
 import ImageCarousel from "../../ui/Carousel/ImageCarousel.tsx";
 import { Section } from "../../ui/Dom/Dom.tsx";

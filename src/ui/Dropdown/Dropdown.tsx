@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './Dropdown.scss';
-import type {Contact} from "../../model/Contact.ts";
+import type {Contact} from "../../types/Contact.ts";
 
 const Dropdown = ({main, content, className}: {main: string, content: Contact[], className: string}) => {
     const [isOpen, setIsOpen] = useState(false);

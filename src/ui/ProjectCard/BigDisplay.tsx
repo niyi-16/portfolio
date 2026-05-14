@@ -1,7 +1,7 @@
 import {icons, svg} from "../../../icons.tsx";
 import ImageCarousel from "../Carousel/ImageCarousel.tsx";
 import {Expandable, Section} from "../Dom/Dom.tsx";
-import type {ProjectTypeExtended} from "../../model/ProjectType.ts";
+import type {ProjectTypeExtended} from "../../types/ProjectType.ts";
 import {ChevronDown} from "lucide-react";
 import {useState} from "react";
 import {logEvent} from "../../lib/utils.ts";

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import type {Education} from "../../model/Education.ts";
-import type {ExperienceType} from "../../model/ExperienceType.ts";
+import type {Education} from "../../types/Education.ts";
+import type {ExperienceType} from "../../types/ExperienceType.ts";
 import {Badge} from "../loveable/badge.tsx";
 import {GraduationCap, Briefcase, MapPin, Calendar, ChevronDown} from "lucide-react";
 import {API_URL, EDUCATION, EXPERIENCE} from "../../../env.ts";
