@@ -5,12 +5,12 @@ import {HashRouter as Router, Routes, Route} from 'react-router-dom'
 import './main.scss'
 
 //Components
-import App from './pages/Home/App.tsx'
+import App from './pages/App.tsx'
 import Navbar from "../src/ui/Navbar/Navbar.tsx"
 import {Project} from "./pages/Projects/Project.tsx";
 
 // import {BASE} from "../env.ts";
-import Details from "./pages/Details/Details.tsx";
+import Details from "./pages/Details.tsx";
 
 createRoot(document.getElementById('root')!).render(
         <Router basename={"/"}>

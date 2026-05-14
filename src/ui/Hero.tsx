@@ -1,7 +1,7 @@
-import {Icon, svgPath} from "../../../icons.tsx";
+import {Icon, svgPath} from "../../icons.tsx";
 import {Terminal, Database, Cloud } from "lucide-react";
-import type {Contact} from "../../types/Contact.ts";
-import {logEvent} from "../../lib/utils.ts";
+import type {Contact} from "../types/Contact.ts";
+import {logEvent} from "../lib/utils.ts";
 
 const HeroSplit = () => {
   /*  const bio = {

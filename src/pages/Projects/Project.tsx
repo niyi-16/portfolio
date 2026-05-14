@@ -3,10 +3,10 @@ import './Projects.scss'
 import {API_URL, PROJECTS, API_TRACKER} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import type {ProjectType, ProjectTypeExtended} from "../../types/ProjectType.ts";
-import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.tsx";
+import LoadingIcon from "../../ui/LoadingIcon.tsx";
 import {useNavigate} from "react-router-dom"
 import BigDisplay from "../../ui/ProjectCard/BigDisplay.tsx";
-import {CollapsibleSection} from "../../ui/Dom/Dom.tsx";
+import {CollapsibleSection} from "../../ui/Dom.tsx";
 import {icons, svg} from "../../../icons.tsx";
 import Cookie from "js-cookie";
 import {logEvent} from "../../lib/utils.ts";

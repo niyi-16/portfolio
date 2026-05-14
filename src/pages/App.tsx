@@ -1,11 +1,11 @@
-import Skills from '../../ui/Skills/Skills.tsx'
-import Experience from '../../ui/Experience/Experience.tsx'
-import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx"
-import ProjectModal from "../../ui/ProjectCard/ProjectModal.tsx";
+import Skills from '../ui/Skills.tsx'
+import Experience from '../ui/Experience.tsx'
+import ProjectCard from "../ui/ProjectCard/ProjectCard.tsx"
+import ProjectModal from "../ui/ProjectCard/ProjectModal.tsx";
 import {useState, useEffect} from "react";
-import {API_URL, PROJECTS} from "../../../env.ts";
-import type {ProjectType} from "../../types/ProjectType.ts";
-import HeroSplit from "../../ui/loveable/Hero.tsx";
+import {API_URL, PROJECTS} from "../../env.ts";
+import type {ProjectType} from "../types/ProjectType.ts";
+import HeroSplit from "../ui/Hero.tsx";
 import {Link} from "react-router-dom";
 
 import {
@@ -15,7 +15,7 @@ import {
     endSession,
     generateSessionandVisitorId,
     startSession
-} from "../../lib/utils.ts";
+} from "../lib/utils.ts";
 
 
 function App() {

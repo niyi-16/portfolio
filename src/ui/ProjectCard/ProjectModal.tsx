@@ -4,7 +4,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogDescription,
-} from "../Dialouge/dialouge.tsx";
+} from "../Dialouge.tsx";
 import {icons, svg} from "../../../icons.tsx";
 import ImageCarousel from "../Carousel/ImageCarousel.tsx";
 
