@@ -1,12 +1,12 @@
 import {useState, useEffect} from 'react'
 import './Projects.scss'
 import {API_URL, PROJECTS, API_TRACKER} from "../../../env.ts"
-import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
+import ProjectCard from "../../components/ProjectCard/ProjectCard.tsx";
 import type {ProjectType, ProjectTypeExtended} from "../../types/ProjectType.ts";
-import LoadingIcon from "../../ui/LoadingIcon.tsx";
+import LoadingIcon from "../../components/LoadingIcon.tsx";
 import {useNavigate} from "react-router-dom"
-import BigDisplay from "../../ui/ProjectCard/BigDisplay.tsx";
-import {CollapsibleSection} from "../../ui/Dom.tsx";
+import BigDisplay from "../../components/ProjectCard/BigDisplay.tsx";
+import {CollapsibleSection} from "../../components/Dom.tsx";
 import {icons, svg} from "../../../icons.tsx";
 import Cookie from "js-cookie";
 import {logEvent} from "../../lib/utils.ts";

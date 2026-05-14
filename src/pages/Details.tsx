@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { API_URL, PROJECTS } from "../../env.ts";
 import type { ProjectType } from "../types/ProjectType.ts";
 import { ArrowLeft } from "lucide-react";
-import ImageCarousel from "../ui/Carousel/ImageCarousel.tsx";
-import { Section } from "../ui/Dom.tsx";
+import ImageCarousel from "../components/Carousel/ImageCarousel.tsx";
+import { Section } from "../components/Dom.tsx";
 
 function Details() {
     const { id } = useParams();

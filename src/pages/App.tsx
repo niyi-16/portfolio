@@ -1,11 +1,11 @@
-import Skills from '../ui/Skills.tsx'
-import Experience from '../ui/Experience.tsx'
-import ProjectCard from "../ui/ProjectCard/ProjectCard.tsx"
-import ProjectModal from "../ui/ProjectCard/ProjectModal.tsx";
+import Skills from '../components/Skills.tsx'
+import Experience from '../components/Experience.tsx'
+import ProjectCard from "../components/ProjectCard/ProjectCard.tsx"
+import ProjectModal from "../components/ProjectCard/ProjectModal.tsx";
 import {useState, useEffect} from "react";
 import {API_URL, PROJECTS} from "../../env.ts";
 import type {ProjectType} from "../types/ProjectType.ts";
-import HeroSplit from "../ui/Hero.tsx";
+import HeroSplit from "../components/Hero.tsx";
 import {Link} from "react-router-dom";
 
 import {

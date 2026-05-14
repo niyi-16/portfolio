@@ -6,7 +6,7 @@ import './main.scss'
 
 //Components
 import App from './pages/App.tsx'
-import Navbar from "../src/ui/Navbar/Navbar.tsx"
+import Navbar from "../src/components/Navbar/Navbar.tsx"
 import {Project} from "./pages/Projects/Project.tsx";
 
 // import {BASE} from "../env.ts";
