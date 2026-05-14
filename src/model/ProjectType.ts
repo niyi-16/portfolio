@@ -17,7 +17,8 @@ export type ProjectType = {
     "features"?: string[],
     "images"?: {
         "default"?: string,
-        "showcase"?: string[]
+        "showcase"?: string[],
+        caption?: string
     },
     "keywords"?: string[],
     "lessons"?: string[],

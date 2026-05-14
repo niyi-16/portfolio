@@ -10,6 +10,7 @@ function ScrollArea({children, className}: {children: React.ReactNode, className
     )
 }
 
+// @ts-ignore
 function Section({title, children, titleStyle, onClick}: { title: string | React.ReactNode; children: React.ReactNode, titleStyle?: string, onClick?: () => void}) {
 
     const  childrenArray = React.Children.toArray(children);

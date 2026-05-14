@@ -47,10 +47,9 @@ function Details() {
         ...(architecture?.backend?.length ? [{label: "Backend", items: architecture.backend}] : []),
         ...(architecture?.other?.length ? [{label: "Other", items: architecture.other}] : []),
     ];
-    const challengeBrief = challenges?.brief;
-    const challengeProblem = challenges?.problem;
-    const challengeSolution = challenges?.solution;
-    const hasChallenges = challengeBrief || challengeProblem || challengeSolution;
+    const challengeStatement = challenges?.statement;
+    const challengeItems = challenges?.items || [];
+    const hasChallenges = !!(challengeStatement || challengeItems.length > 0);
 
     // @ts-ignore
     return (
@@ -147,20 +146,31 @@ function Details() {
                         {/* Challenges */}
                         {hasChallenges && (
                             <Section title="Challenges">
-                                <div className="space-y-3 text-sm text-foreground/80">
-                                    {challengeBrief && <p>{challengeBrief}</p>}
-                                    {challengeProblem && (
-                                        <div>
-                                            <p className="text-xs font-medium text-muted-foreground mb-1">Problem</p>
-                                            <p>{challengeProblem}</p>
-                                        </div>
+                                <div className="space-y-6">
+                                    {challengeStatement && (
+                                        <p className="text-sm text-foreground/80">
+                                            {challengeStatement}
+                                        </p>
                                     )}
-                                    {challengeSolution && (
-                                        <div>
-                                            <p className="text-xs font-medium text-muted-foreground mb-1">Solution</p>
-                                            <p>{challengeSolution}</p>
+
+                                    {challengeItems.map((item, index: number) => (
+                                        <div key={index} className="space-y-2">
+                                            <h4 className="font-medium text-foreground">{index + 1}. {item.brief}</h4>
+                                            {item.problem && (
+                                                <p className="ml-2 text-sm text-foreground/80">
+                                                    <span className="font-bold text-foreground mr-0.5">Problem:</span>
+                                                    {item.problem}
+                                                </p>
+                                            )}
+
+                                            {item.solution && (
+                                                <p className="ml-2 text-sm text-foreground/80">
+                                                    <span className="font-bold text-foreground mr-0.5">Solution:</span>
+                                                    {item.solution}
+                                                </p>
+                                            )}
                                         </div>
-                                    )}
+                                    ))}
                                 </div>
                             </Section>
                         )}

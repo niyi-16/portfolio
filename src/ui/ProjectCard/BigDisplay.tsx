@@ -4,14 +4,16 @@ import {Expandable, Section} from "../Dom/Dom.tsx";
 import type {ProjectTypeExtended} from "../../model/ProjectType.ts";
 import {ChevronDown} from "lucide-react";
 import {useState} from "react";
+import {logEvent} from "../../lib/utils.ts";
 
 function BigDisplay({project}: { project: ProjectTypeExtended }) {
     if (!project) return null;
     const {name, overview, stack, links, images, architecture, challenges, keywords, process} = project;
     const cover = images?.default;
-    const showcase = images?.showcase ? [{src: cover, alt: `${name} cover`}, ...images.showcase] : cover ? [{
+    const showcase = images?.showcase ? [{src: cover, alt: `${name} cover`, caption: images.caption}, ...images.showcase] : cover ? [{
         src: cover,
-        alt: `${name} cover`
+        alt: `${name} cover`,
+        caption: images.caption
     }] : [];
 
     const linksSafe = links || {};
@@ -39,6 +41,7 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                 {/* Cover */}
                 {cover && (
                     <div className="w-7/9 mx-auto aspect-video overflow-hidden rounded-t-lg bg-black/20">
+                        {/*@ts-ignore*/}
                         {showcase && <ImageCarousel images={showcase}/>}
                     </div>
                 )}
@@ -70,6 +73,9 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                                                 aria-label={link}
                                                 title={link}
                                                 className="flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:text-foreground hover:scale-115 transition-all duration-250 ease-in-out"
+                                                onClick={() => {
+                                                    logEvent("click", `clicked on ${link} link for project ${project.name}`, {event_parent: "BigDisplay-Main", target: link});
+                                                }}
                                             >
                                                 <a className={"project-card__icon-link"} key={index}
                                                    href={linksSafe[link]} target="_blank">
@@ -84,7 +90,7 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                                 </div>
                             )}
                         </div>
-                        <section className="text-lg text-muted-foreground">
+                        <section className="text-lg text-muted-foreground leading-5.5">
                             {overview?.summary}
                         </section>
                     </section>
@@ -132,9 +138,12 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                                             <Expandable open={tracker.planning} >
 
                                             {process.planning.filter(plan => plan).map( (plan, index) =>
-                                                <div className="" key={index}>
-                                                {plan.p && <p className={"text-lg text-foreground/80"}>{plan.p}</p>}
-                                                {plan.img && <img src={plan.img} alt={"plan-"+index} className={"aspect-video object-cover rounded-lg shadow-md"}/>}
+                                                <div className="flex flex-col" key={index}>
+                                                {plan.p && <p className={"text-lg text-foreground/80 leading-5.5"}>{plan.p}</p>}
+                                                {plan.img && <div className={"aspect-video p-4"}>
+                                                    <img src={plan.img} alt={"plan-" + index}
+                                                         className={"w-fit shadow-md rounded-lg object-cover mx-auto"}/>
+                                                </div>}
                                             </div>
 
                                             )}
@@ -155,8 +164,13 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
 
                                                 {process.design.filter(design => design).map( (design, index) =>
                                                     <div className="" key={index}>
-                                                        {design.p && <p className={"text-lg text-foreground/80"}>{design.p}</p>}
-                                                        {design.img && <img src={design.img} alt={"plan-"+index} className={"aspect-video object-cover rounded-lg shadow-md"}/>}
+                                                        {design.p && <p className={"text-lg text-foreground/80" +
+                                                            " leading-5.5"}>{design.p}</p>}
+                                                        {design.img && <div className={"aspect-video p-4 "+
+                                                            " object-cover"}>
+                                                            <img src={design.img} alt={"plan-" + index}
+                                                                 className={"w-full rounded-lg shadow-md"}/>
+                                                        </div>}
                                                     </div>
 
                                                 )}
@@ -173,18 +187,29 @@ function BigDisplay({project}: { project: ProjectTypeExtended }) {
                     {/* Challenges */}
                     {hasChallenges && (
                         <Section title="Challenges">
-                            <div className="space-y-3 text-sm text-foreground/80">
-                                {challengeStatement && <p>{challengeStatement}</p>}
-                                {challengeItems.length > 0 && challengeItems.map((item, index: number) => (
-                                    <div key={index} className="space-y-3">
-                                        {Object.entries(item).map(([key, value]) => (
-                                            value && (
-                                                <div key={key}>
-                                                    <p className="text-xs font-medium text-muted-foreground mb-1 capitalize">{key}</p>
-                                                    <p>{value}</p>
-                                                </div>
-                                            )
-                                        ))}
+                            <div className="space-y-6">
+                                {challengeStatement && (
+                                    <p className="text-sm text-foreground/80">
+                                        {challengeStatement}
+                                    </p>
+                                )}
+
+                                {challengeItems.map((item, index: number) => (
+                                    <div key={index} className="space-y-2">
+                                        <h4 className="font-medium text-foreground">{index + 1}. {item.brief}</h4>
+                                        {item.problem && (
+                                            <p className="ml-2 text-sm text-foreground/80">
+                                                <span className="font-bold text-foreground mr-0.5">Problem:</span>
+                                                {item.problem}
+                                            </p>
+                                        )}
+
+                                        {item.solution && (
+                                            <p className="ml-2 text-sm text-foreground/80">
+                                                <span className="font-bold text-foreground mr-0.5">Solution:</span>
+                                                {item.solution}
+                                            </p>
+                                        )}
                                     </div>
                                 ))}
                             </div>

@@ -5,7 +5,7 @@ import { Maximize2, X} from "lucide-react";
 import { createPortal } from "react-dom";
 
 type ImageCarouselProps = {
-    images: { src: string, alt: string, caption?: string }[],
+    images: { src: string, alt: string, caption?: string | undefined }[],
     noRecursion?: boolean,
     initialIndex?: number,
 };

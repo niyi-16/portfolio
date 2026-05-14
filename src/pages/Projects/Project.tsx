@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import './Projects.scss'
-import {API_URL, PROJECTS} from "../../../env.ts"
+import {API_URL, PROJECTS, API_TRACKER} from "../../../env.ts"
 import ProjectCard from "../../ui/ProjectCard/ProjectCard.tsx";
 import type {ProjectType, ProjectTypeExtended} from "../../model/ProjectType.ts";
 import LoadingIcon from "../../ui/LoadingIcon/LoadingIcon.tsx";
@@ -8,6 +8,8 @@ import {useNavigate} from "react-router-dom"
 import BigDisplay from "../../ui/ProjectCard/BigDisplay.tsx";
 import {CollapsibleSection} from "../../ui/Dom/Dom.tsx";
 import {icons, svg} from "../../../icons.tsx";
+import Cookie from "js-cookie";
+import {logEvent} from "../../lib/utils.ts";
 
 function Project() {
     const navigate = useNavigate()
@@ -26,7 +28,7 @@ function Project() {
         keywords: false,
         metadata: false,
     })
-
+    const session = sessionStorage.getItem("session")
     /*Get Projects from API*/
     useEffect(() => {
         const getProjects = async () => {
@@ -62,6 +64,21 @@ function Project() {
         setTracker(prev => ({ ...prev, [key]: !prev[key] }));
 
 
+    const logClick = async (project_id: string) => {
+        console.log(`Clicked on project with ID: ${project_id}`);
+        await fetch(API_TRACKER + "/project_viewed", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + session
+            },
+            body: JSON.stringify({
+                project_id: project_id,
+                visitor_id: Cookie.get("visitor")
+            })
+        }).then(res => res.json()).then(data => {
+            console.log(data)})
+    }
     const sp = selectedProject;
     const linksSafe = sp?.links || {};
     const linkList = Object.keys(linksSafe);
@@ -103,6 +120,10 @@ function Project() {
                                             images: project.images
                                         }}
                                         onClick={() => {
+                                            if (session) {
+                                                logClick(project._id).then(res => console.log(res))
+                                                logEvent("click", `clicked on project ${project.name}`)
+                                            }
                                             if (devWidth < 768) {
                                                 navigate(`/projects/details/${project._id}`, { state: { project } })
                                             } else {
@@ -113,7 +134,14 @@ function Project() {
                                 ) : (
                                     <div
                                         className={`compact-sidebar-item ${selectedProject?._id === project._id ? 'active' : ''}`}
-                                        onClick={() => setSelectedProject(project as ProjectTypeExtended)}
+                                        onClick={() => {
+                                            if (session) {
+                                                logClick(project._id).then(res => console.log(res))
+                                                logEvent("click", `clicked on project ${project.name} in compact view`)
+
+                                            }
+                                            setSelectedProject(project as ProjectTypeExtended)
+                                        }}
                                     >
                                         <div className="compact-sidebar-thumb">
                                             {project.images?.default ? (
@@ -179,9 +207,9 @@ function Project() {
                             {/* Features */}
                             {sp.features && sp.features.length > 0 && (
                                 <CollapsibleSection title="Features" onClick={() => toggleTracker("features")} watcher={tracker.features}>
-                                    <ul className="list-disc list-inside space-y-1 text-xs text-foreground/80">
+                                    <ul className="list-disc list-outside pl-4 space-y-1 text-[10.5pt] text-foreground/80 ">
                                         {sp.features.map((f: string, i: number) => (
-                                            <li key={i}>{f}</li>
+                                            <li key={i} className={"hover:text-accent hover:brightness-150 transition-colors duration-200"}>{f}</li>
                                         ))}
                                     </ul>
                                 </CollapsibleSection >
@@ -190,9 +218,9 @@ function Project() {
                             {/* Lessons */}
                             {sp.lessons && sp.lessons.length > 0 && (
                                 <CollapsibleSection title="Lessons Learned" watcher={tracker.lessons} onClick={() => toggleTracker("lessons")}>
-                                    <ul className="list-disc list-inside text-xs text-foreground/70 space-y-1">
+                                    <ul className="list-disc list-outside pl-4 text-[10.5pt] text-foreground/70 space-y-1">
                                         {sp.lessons.map((l, i) => (
-                                            <li key={i}>{l}</li>
+                                            <li key={i} className={"hover:text-accent hover:brightness-150 transition-colors duration-200"}>{l}</li>
                                         ))}
                                     </ul>
                                 </CollapsibleSection>

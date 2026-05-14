@@ -5,6 +5,7 @@ import {Badge} from "../loveable/badge.tsx";
 import {GraduationCap, Briefcase, MapPin, Calendar, ChevronDown} from "lucide-react";
 import {API_URL, EDUCATION, EXPERIENCE} from "../../../env.ts";
 import {Expandable} from "../Dom/Dom.tsx";
+import {logEvent} from "../../lib/utils.ts";
 
 function Experience() {
 
@@ -120,10 +121,16 @@ function statusColor(status: string) {
 }
 
 const MiniEducation = ({education}: { education: Education }) => {
+    const __self = "education";
 
     return (
-        <div
-            className="group flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-2.5 transition-all hover:border-primary/40 hover:shadow-md hover:shadow-primary/5">
+        <div className="group flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-2.5
+        transition-all hover:border-primary/40 hover:shadow-md hover:shadow-primary/5"
+        onClick={async () => {
+            await logEvent("click", `Tried to click ${education.institution}`, {event_parent: __self, target: education.institution})
+
+        }}
+        >
             <GraduationCap className="h-4 w-4 shrink-0 text-primary"/>
             <div className="flex flex-col flex-1 items-start overflow-hidden">
                 <span className="truncate text-sm font-medium text-foreground">
@@ -150,11 +157,15 @@ const MiniEducation = ({education}: { education: Education }) => {
 
 function MiniExperience({experience}: { experience: ExperienceType }) {
     const [open, setOpen] = useState(false);
+    const __self = "experience";
 
     return (
         <div className={`cursor-pointer rounded-2xl border border-border bg-card transition-all hover:border-primary/40 
                         hover:shadow-md hover:shadow-primary/5`}
-             onClick={() => setOpen(!open)}>
+             onClick={async () => {
+                 setOpen(!open)
+                 await logEvent("click", `${open ? "Closed" : "Opened"} ${experience.title}`, {event_parent: __self, target: experience.title})
+             }}>
             {/* Pill header */}
             <div className="flex items-center gap-3 px-4 py-2.5">
                 <Briefcase className="h-4 w-4 shrink-0 text-primary"/>

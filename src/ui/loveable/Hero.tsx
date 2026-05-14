@@ -1,6 +1,7 @@
 import {Icon, svgPath} from "../../../icons.tsx";
 import {Terminal, Database, Cloud } from "lucide-react";
 import type {Contact} from "../../model/Contact.ts";
+import {logEvent} from "../../lib/utils.ts";
 
 const HeroSplit = () => {
   /*  const bio = {
@@ -26,6 +27,7 @@ const HeroSplit = () => {
 
         goals: "I’m currently seeking opportunities where I can continue strengthening my software development skills, deliver impactful solutions, and grow into technical leadership roles over time.",
     };
+    const self = "hero";
     const socialLinks: Contact[] = [
         {
             id: 1,
@@ -80,6 +82,10 @@ const HeroSplit = () => {
                                 key={s.id}
                                 href={s.url}
                                 target={"_blank"}
+                                onClick={async () => {
+                                    await logEvent("click", `clicked on ${s.name} hero link`, {event_parent: self, target: s.name});
+                                    window.open(s.url, "_blank", "noopener,noreferrer");
+                                }}
                                 className="flex items-center justify-center rounded-full border border-border p-2.5 text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                             >
                                 {/*svg*/}
