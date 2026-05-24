@@ -4,7 +4,7 @@ import { type ProjectMini } from "../../types/ProjectType.ts";
 
 
 
-function ProjectCard({project, onClick}: { project: ProjectMini, onClick: () => void}) {
+function ProjectCard({project, onClick, onHover}: { project: ProjectMini, onClick: () => void, onHover?: () => void}) {
     const {name, short_desc, stack, links, images} = project;
     const cover = images?.default
     const linksSafe = links || {};
@@ -12,7 +12,9 @@ function ProjectCard({project, onClick}: { project: ProjectMini, onClick: () => 
 
     return (
         //@ts-ignore
-        <article className="project-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : undefined }}>
+        <article className="project-card" onClick={onClick} style={{ cursor: onClick ? "pointer" : undefined }}
+                 onMouseEnter={onHover}
+        >
             <div className="project-card__media">
                 {cover ? (
         //@ts-ignore

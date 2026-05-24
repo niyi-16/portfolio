@@ -1,15 +1,15 @@
 import {useState, useEffect} from 'react'
 import './Projects.scss'
-import {API_URL, PROJECTS, API_TRACKER} from "../../../env.ts"
+import {API_URL, PROJECTS, API_TRACKER, VISITOR_KEY} from "../../../env.ts"
 import ProjectCard from "../../components/ProjectCard/ProjectCard.tsx";
 import type {ProjectType, ProjectTypeExtended} from "../../types/ProjectType.ts";
-import LoadingIcon from "../../components/LoadingIcon.tsx";
 import {useNavigate} from "react-router-dom"
 import BigDisplay from "../../components/ProjectCard/BigDisplay.tsx";
+import {useLoad} from "../../context/LoadingContext.tsx";
 import {CollapsibleSection} from "../../components/Dom.tsx";
 import {icons, svg} from "../../../icons.tsx";
 import Cookie from "js-cookie";
-import {logEvent} from "../../lib/utils.ts";
+import {logEvent, wakeDB} from "../../lib/utils.ts";
 
 function Project() {
     const navigate = useNavigate()
@@ -17,7 +17,9 @@ function Project() {
     const [search, setSearch] = useState("")
     const [projects, setProjects] = useState<ProjectTypeExtended[]>([])
     const [selectedProject, setSelectedProject] = useState<ProjectTypeExtended | null>(null)
-    const [loading, setLoading] = useState(false)
+
+
+    const {setLoading, loading} = useLoad();
 
     const isExpanded = !!selectedProject
     const [tracker, setTracker] = useState( {
@@ -32,7 +34,6 @@ function Project() {
     /*Get Projects from API*/
     useEffect(() => {
         const getProjects = async () => {
-            setLoading(true)
             const response = await fetch(API_URL + PROJECTS + `?show=${1}`)
             return response.json()
         }
@@ -41,7 +42,7 @@ function Project() {
             setProjects(data)
             setLoading(false)
         })
-    }, [])
+    }, [setLoading])
 
     /*Filter Projects*/
     const filteredProjects = projects.filter(project => {
@@ -74,10 +75,11 @@ function Project() {
             },
             body: JSON.stringify({
                 project_id: project_id,
-                visitor_id: Cookie.get("visitor")
+                visitor_id: Cookie.get(VISITOR_KEY)
             })
         }).then(res => res.json()).then(data => {
-            console.log(data)})
+            console.log(data)
+        })
     }
     const sp = selectedProject;
     const linksSafe = sp?.links || {};
@@ -106,7 +108,6 @@ function Project() {
                             <use href="x.svg#icon"/>
                         </svg>
                     </div>}
-                    {loading && <LoadingIcon cls={"col-span-3"}/>}
                     {filteredProjects.length > 0 ?
                         filteredProjects.map((project: ProjectType) => (
                             <div key={project._id}>
@@ -130,6 +131,13 @@ function Project() {
                                                 setSelectedProject(project as ProjectTypeExtended)
                                             }
                                         }}
+                                        onHover={async () => {
+                                            if (project._id === "698ea6a2b194d7762c465b8d")
+                                            console.log("hover", `hovered over project ${project._id}`)
+                                            await wakeDB()
+                                        }}
+
+
                                     />
                                 ) : (
                                     <div

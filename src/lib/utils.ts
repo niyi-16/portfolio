@@ -1,19 +1,23 @@
 import {type ClassValue, clsx} from "clsx";
 import {twMerge} from "tailwind-merge";
 import Cookie from "js-cookie";
-import {API_TRACKER} from "../../env.ts";
+import {API_TRACKER, API_PASSIFY, SESSION_KEY, VISITOR_KEY} from "../../env.ts";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
+export function isMobile() {
+    return window.innerWidth <= 768;
+}
 
+export const isEmpty = (str: string) => !str || str.length === 0 || /\S/.test(str);
 export function checkForSession(): string | null {
-    return sessionStorage.getItem("session");
+    return sessionStorage.getItem(SESSION_KEY);
 }
 
 export function checkForVisitorId(): string | undefined {
-    return Cookie.get("visitor");
+    return Cookie.get(VISITOR_KEY);
 }
 
 export async function generateSessionandVisitorId() {
@@ -34,8 +38,8 @@ export async function generateSessionandVisitorId() {
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         })
     }).then(res => res.json()).then(data => {
-        sessionStorage.setItem("session", data.session_id)
-        Cookie.set("visitor", data.visitorId, {expires: 365})
+        sessionStorage.setItem(SESSION_KEY, data.session_id)
+        Cookie.set(VISITOR_KEY, data.visitorId, {expires: 365})
     })
 }
 
@@ -52,7 +56,7 @@ export async function startSession() {
         })
     }).then(res => res.json()).then(data => {
         console.log(data)
-        sessionStorage.setItem("session", data.session_id)
+        sessionStorage.setItem(SESSION_KEY, data.session_id)
     })
 }
 export async function logEvent(event_type: string, event_value: string, additional?:{event_parent?: string, target?: string}) {
@@ -99,4 +103,25 @@ export function captureRef() {
         window.history.replaceState({}, '', newUrl);
     }
     return ref;
+}
+
+export async function wakeDB() {
+    const req = await fetch(API_PASSIFY + "/wakedb", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Idempotency-Key": `wake-${Date.now() + ((60 * 15) * 1000)}`
+        },
+        body: JSON.stringify({
+            visitor_id: checkForVisitorId()
+        })
+    })
+
+    if (req.status === 200) {
+        console.log(await req.json())
+    } else if (req.status === 409) {
+        console.log(await req.text())
+    } else {
+        console.error("Unexpected response from wakeDB:", req.status, req.statusText)
+    }
 }

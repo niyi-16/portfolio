@@ -16,21 +16,21 @@ export type IconType = {
     className?: string
     defaultColor?: string
 }
-const svgPath: Record<string, IconType> ={
-    "github":  {
-        icon: `${BASE}/github.svg#Dribbble-Light-Preview`,
+const svgPath: Record<string, IconType> = {
+    "github": {
+        icon: `${BASE}/github.svg#github`,
         defaultColor: "#ffffff",
     },
-    "linkedin":{
+    "linkedin": {
         icon: `${BASE}/linkedin.svg#linkedin`,
     },
     "website": {
         icon: `${BASE}/web.svg#web`,
     },
-    "demo":    {
+    "demo": {
         icon: `${BASE}/web.svg#web`,
     },
-    "email":   {
+    "email": {
         icon: `${BASE}/email.svg#email`,
     },
     "document": {
@@ -42,27 +42,37 @@ const svgPath: Record<string, IconType> ={
     "database": {
         icon: `${BASE}/database.svg#database`,
     },
-    "cloud":    {
+    "cloud": {
         icon: `${BASE}/cloud.svg#cloud`,
     },
 }
-const Icon = ({ icon, size, color, className}: { icon:string, size?: number, color?: string, className?: string }) => (
+
+const temp = (icon: string) => {
+    if (icon === "c#") return `${BASE}/csharp.svg#csharp`
+    return `${BASE}${icon}.svg#${icon}`
+}
+
+const Icon = ({icon, size, color, className}: { icon: string, size?: number, color?: string, className?: string }) => (
     <svg
         width={size}
         height={size}
         className={className}
         style={{color: color}}
         fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg"
     >
         <use href={icon}></use>
     </svg>
 );
 
-const svg=  ({ icon, size, color, className}: { icon:string, size?: number, color?: string, className?: string }) => {
-    if (!svgPath[icon]) return null;
-    if (className) return <Icon icon={svgPath[icon].icon} size={svgPath[icon].size ?? size} className={className} />
-    return <Icon icon={svgPath[icon].icon} size={svgPath[icon].size ?? size} color={svgPath[icon].defaultColor ?? color} />
+const svg = ({icon, size, color, className}: { icon: string, size?: number, color?: string, className?: string }) => {
+    if (!svgPath[icon]) {
+        console.log(icon)
+        svgPath[icon] = {icon: temp(icon)}
+    }
+    if (className) return <Icon icon={svgPath[icon].icon ?? temp(icon)} size={svgPath[icon].size ?? size}
+                                className={className}/>
+    return <Icon icon={svgPath[icon].icon} size={svgPath[icon].size ?? size}
+                 color={svgPath[icon].defaultColor ?? color}/>
 }
 
-export {icons, svg, svgPath ,Icon}
+export {icons, svg, svgPath, Icon}

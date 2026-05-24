@@ -33,7 +33,8 @@ const platforms: Contact[] = [
     // }
 ]
 
-function Navbar() {
+// @ts-ignore
+function Navbar(hidden: { hidden?: boolean}) {
     const [devWidth, setDevWidth] = useState(window.innerWidth);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 

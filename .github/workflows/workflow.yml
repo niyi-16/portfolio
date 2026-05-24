@@ -41,6 +41,10 @@ jobs:
         run: npm run build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_PASSIFY_API: ${{ secrets.VITE_PASSIFY_API }}
+          VITE_TRACK_URL: ${{ secrets.VITE_TRACK_URL }}
+          VITE_SESSION_KEY: ${{ secrets.VITE_SESSION_KEY }}
+          VITE_VISITOR_KEY: ${{ secrets.VITE_VISITOR_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

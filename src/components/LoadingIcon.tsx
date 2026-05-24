@@ -1,4 +1,4 @@
-function LoadingIcon({cls}: {cls: string}) {
+function LoadingIcon({cls}: {cls?: string}) {
 
     return (
         <div className={"flex justify-center items-center " + `${cls}`}>

@@ -70,6 +70,107 @@ function Experience() {
     )
 }
 
+function Experience2() {
+
+    const [education, setEducation] = useState<[]>([])
+    const [experience, setExperience] = useState<[]>([])
+
+
+    //Education
+    useEffect(() => {
+        const getEducationHistory = async () => {
+            const educationHistory = await fetch(API_URL + EDUCATION)
+            return await educationHistory.json()
+        }
+        getEducationHistory().then((data) => {
+            setEducation(data)
+        })
+    }, [])
+
+    //ExperienceType
+    useEffect(() => {
+        const getExperience = async () => {
+            const experience = await fetch(API_URL + EXPERIENCE)
+            return await experience.json()
+        }
+        getExperience().then((data) => {
+            setExperience(data)
+        })
+    }, []);
+
+    const groupByYear = (items: (Education | ExperienceType)[]) => {
+        const groups: { [key: string]: (Education | ExperienceType)[] } = {};
+        items.forEach(item => {
+            const date = item.end_date ? new Date(item.end_date) : new Date();
+            const year = date.getFullYear();
+            if (!groups[year]) groups[year] = [];
+            groups[year].push(item);
+        });
+        return Object.entries(groups).sort((a, b) => parseInt(b[0]) - parseInt(a[0]));
+    };
+
+    const groupedEducation = groupByYear(education);
+    const groupedExperience = groupByYear(experience);
+
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative">
+            {/* Timeline center line for desktop */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-border -translate-x-1/2 z-0" />
+
+            {/* Education */}
+            <div className="space-y-8 relative z-10">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border pb-2 bg-background">
+                    Education
+                </h3>
+                <div className="space-y-8">
+                    {groupedEducation.map(([year, items]) => (
+                        <div key={year} className="space-y-4">
+                            <div className="flex items-center gap-2">
+                                <div className="h-px flex-1 bg-border/50" />
+                                <span className="text-[20px] font-bold text-muted-foreground/60 uppercase tracking-tighter bg-muted/30 px-2 py-0.5 rounded">
+                                    {year}
+                                </span>
+                                <div className="h-px flex-1 bg-border/50" />
+                            </div>
+                            <div className="space-y-4">
+                                {items.map((item) => (
+                                    <MiniEducation key={item._id} education={item as Education}/>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Experience */}
+            <div className="space-y-8 relative z-10">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border pb-2 bg-background">
+                    Experience
+                </h3>
+                <div className="space-y-8">
+                    {groupedExperience.map(([year, items]) => (
+                        <div key={year} className="space-y-4">
+                            <div className="flex items-center gap-2">
+                                <div className="h-px flex-1 bg-border/50" />
+                                <span className="text-[20px] font-bold text-muted-foreground/60 uppercase tracking-tighter bg-muted/30 px-2 py-0.5 rounded">
+                                    {year}
+                                </span>
+                                <div className="h-px flex-1 bg-border/50" />
+                            </div>
+                            <div className="space-y-4">
+                                {items.map((item) => (
+                                    <MiniExperience key={item._id} experience={item as ExperienceType}/>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
 function formatDate(dateStr: string | null): string {
     if (!dateStr) return "Present";
     const date = new Date(dateStr);
@@ -209,4 +310,4 @@ function MiniExperience({experience}: { experience: ExperienceType }) {
     );
 }
 
-export default Experience
+export {Experience, Experience2}
