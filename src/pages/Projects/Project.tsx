@@ -66,7 +66,6 @@ function Project() {
 
 
     const logClick = async (project_id: string) => {
-        console.log(`Clicked on project with ID: ${project_id}`);
         await fetch(API_TRACKER + "/project_viewed", {
             method: "POST",
             headers: {
@@ -77,9 +76,7 @@ function Project() {
                 project_id: project_id,
                 visitor_id: Cookie.get(VISITOR_KEY)
             })
-        }).then(res => res.json()).then(data => {
-            console.log(data)
-        })
+        }).then(res => res.json())
     }
     const sp = selectedProject;
     const linksSafe = sp?.links || {};
@@ -122,7 +119,7 @@ function Project() {
                                         }}
                                         onClick={() => {
                                             if (session) {
-                                                logClick(project._id).then(res => console.log(res))
+                                                logClick(project._id).then()
                                                 logEvent("click", `clicked on project ${project.name}`)
                                             }
                                             if (devWidth < 768) {
@@ -132,9 +129,9 @@ function Project() {
                                             }
                                         }}
                                         onHover={async () => {
-                                            if (project._id === "698ea6a2b194d7762c465b8d")
-                                            console.log("hover", `hovered over project ${project._id}`)
+                                            if (project._id === "698ea6a2b194d7762c465b8d"){
                                             await wakeDB()
+                                            }
                                         }}
 
 
@@ -142,10 +139,10 @@ function Project() {
                                 ) : (
                                     <div
                                         className={`compact-sidebar-item ${selectedProject?._id === project._id ? 'active' : ''}`}
-                                        onClick={() => {
+                                        onClick={async () => {
                                             if (session) {
-                                                logClick(project._id).then(res => console.log(res))
-                                                logEvent("click", `clicked on project ${project.name} in compact view`)
+                                                await logClick(project._id)
+                                                await logEvent("click", `clicked on project ${project.name} in compact view`)
 
                                             }
                                             setSelectedProject(project as ProjectTypeExtended)

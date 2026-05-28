@@ -38,7 +38,7 @@ function App() {
         window.addEventListener("visibilitychange", handleVisibilityChange);
 
         if (checkForVisitorId() === undefined && checkForSession() === null){
-            generateSessionandVisitorId().then(r => console.log(r));
+            generateSessionandVisitorId();
         }
 
         else if (typeof checkForVisitorId() === "string" && checkForSession() === null) {
@@ -63,7 +63,7 @@ function App() {
             window.removeEventListener("beforeunload", handleUnload);
             window.removeEventListener("visibilitychange", handleVisibilityChange);
         }
-    }, [])
+    }, [setLoading])
 
     // @ts-ignore
     return (

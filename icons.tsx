@@ -49,6 +49,7 @@ const svgPath: Record<string, IconType> = {
 
 const temp = (icon: string) => {
     if (icon === "c#") return `${BASE}/csharp.svg#csharp`
+    if (icon === ".net") return `${BASE}/dotnet.svg#dotnet`
     return `${BASE}${icon}.svg#${icon}`
 }
 
@@ -66,7 +67,6 @@ const Icon = ({icon, size, color, className}: { icon: string, size?: number, col
 
 const svg = ({icon, size, color, className}: { icon: string, size?: number, color?: string, className?: string }) => {
     if (!svgPath[icon]) {
-        console.log(icon)
         svgPath[icon] = {icon: temp(icon)}
     }
     if (className) return <Icon icon={svgPath[icon].icon ?? temp(icon)} size={svgPath[icon].size ?? size}

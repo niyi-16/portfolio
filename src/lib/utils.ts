@@ -55,7 +55,6 @@ export async function startSession() {
             whereFrom: tracker
         })
     }).then(res => res.json()).then(data => {
-        console.log(data)
         sessionStorage.setItem(SESSION_KEY, data.session_id)
     })
 }
@@ -106,7 +105,7 @@ export function captureRef() {
 }
 
 export async function wakeDB() {
-    const req = await fetch(API_PASSIFY + "/wakedb", {
+   await fetch(API_PASSIFY + "/wakedb", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -117,11 +116,4 @@ export async function wakeDB() {
         })
     })
 
-    if (req.status === 200) {
-        console.log(await req.json())
-    } else if (req.status === 409) {
-        console.log(await req.text())
-    } else {
-        console.error("Unexpected response from wakeDB:", req.status, req.statusText)
-    }
 }
