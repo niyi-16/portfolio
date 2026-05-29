@@ -120,14 +120,14 @@ function Project() {
                                                 images: project.images
                                             }}
                                             onClick={async () => {
-                                                if (session) {
-                                                    await logClick(project._id).then()
-                                                    await logEvent("click", `clicked on project ${project.name}`)
-                                                }
                                                 if (devWidth < 768) {
                                                     navigate(`/projects/details/${project._id}`, {state: {project}})
                                                 } else {
                                                     setSelectedProject(project as ProjectTypeExtended)
+                                                }
+                                                if (session) {
+                                                    await logClick(project._id).then()
+                                                    await logEvent("click", `clicked on project ${project.name}`).then()
                                                 }
                                             }}
                                             onHover={async () => {
