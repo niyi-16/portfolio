@@ -126,8 +126,8 @@ function Project() {
                                                     setSelectedProject(project as ProjectTypeExtended)
                                                 }
                                                 if (session) {
-                                                    await logClick(project._id).then()
-                                                    await logEvent("click", `clicked on project ${project.name}`).then()
+                                                    logClick(project._id)
+                                                    logEvent("click", `clicked on project ${project.name}`)
                                                 }
                                             }}
                                             onHover={async () => {
@@ -142,12 +142,11 @@ function Project() {
                                         <div
                                             className={`compact-sidebar-item ${selectedProject?._id === project._id ? 'active' : ''}`}
                                             onClick={async () => {
-                                                if (session) {
-                                                    await logClick(project._id)
-                                                    await logEvent("click", `clicked on project ${project.name} in compact view`)
-
-                                                }
                                                 setSelectedProject(project as ProjectTypeExtended)
+                                                if (session) {
+                                                    logClick(project._id)
+                                                    logEvent("click", `clicked on project ${project.name} in compact view`)
+                                                }
                                             }}
                                         >
                                             <div className="compact-sidebar-thumb">
