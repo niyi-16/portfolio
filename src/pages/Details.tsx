@@ -6,7 +6,7 @@ import type { ProjectType } from "../types/ProjectType.ts";
 import { ArrowLeft } from "lucide-react";
 import ImageCarousel from "../components/Carousel/ImageCarousel.tsx";
 import {Section} from "../components/Dom.tsx";
-import {useLoad} from "../context/LoadingContext.tsx";
+
 
 function Details() {
     const { id } = useParams();
@@ -14,7 +14,7 @@ function Details() {
     const navigate = useNavigate();
     const [project, setProject] = useState<ProjectType | null>(location.state?.project || null);
     const [loading, setLoading] = useState(!project);
-    const {setLoading: setGlobalLoading} = useLoad();
+
 
     useEffect(() => {
         if (id) {
@@ -27,14 +27,12 @@ function Details() {
                     console.error("Failed to fetch project details:", error);
                 } finally {
                     setLoading(false);
-                    setGlobalLoading(false);
+
                 }
             };
-            fetchProject();
-        } else {
-            setGlobalLoading(false);
+            fetchProject().then();
         }
-    }, []);
+    }, [id]);
 
     if (loading) return <div className="p-6 text-center">Loading...</div>;
     if (!project) return <div className="p-6 text-center">Project not found.</div>;

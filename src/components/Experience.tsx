@@ -148,8 +148,8 @@ function Experience2() {
                     Experience
                 </h3>
                 <div className="space-y-8">
-                    {groupedExperience.map(([year, items]) => (
-                        <div key={year} className="space-y-4">
+                    {groupedExperience.map(([year, items], index) => (
+                        <div key={index} className="space-y-4">
                             <div className="flex items-center gap-2">
                                 <div className="h-px flex-1 bg-border/50" />
                                 <span className="text-[20px] font-bold text-muted-foreground/60 uppercase tracking-tighter bg-muted/30 px-2 py-0.5 rounded">

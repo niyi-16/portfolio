@@ -15,22 +15,19 @@ import {
     generateSessionandVisitorId, isMobile,
     startSession
 } from "../lib/utils.ts";
-import {useLoad} from "../context/LoadingContext.tsx";
-
 
 function App() {
     const [modalOpen, setModalOpen] = useState({state: false, project: {}});
     const [recentProject, setRecentProject] = useState<ProjectType[]>([]);
-    const {setLoading} = useLoad();
 
     useEffect(() => {
         const handleUnload = () => {
-            endSession();
+            endSession().then();
         };
 
         const handleVisibilityChange = () => {
             if (document.visibilityState === "hidden") {
-                endSession();
+                endSession().then();
             }
         };
 
@@ -38,11 +35,11 @@ function App() {
         window.addEventListener("visibilitychange", handleVisibilityChange);
 
         if (checkForVisitorId() === undefined && checkForSession() === null){
-            generateSessionandVisitorId();
+            generateSessionandVisitorId().then();
         }
 
         else if (typeof checkForVisitorId() === "string" && checkForSession() === null) {
-            startSession();
+            startSession().then();
         }
 
         const getProjects = async () => {
@@ -52,18 +49,16 @@ function App() {
                 setRecentProject(data)
             } catch (error) {
                 console.error("Failed to fetch projects:", error)
-            } finally {
-                setLoading(false)
             }
         }
 
-        getProjects()
+        getProjects().then()
 
         return () => {
             window.removeEventListener("beforeunload", handleUnload);
             window.removeEventListener("visibilitychange", handleVisibilityChange);
         }
-    }, [setLoading])
+    }, [])
 
     // @ts-ignore
     return (
@@ -104,6 +99,7 @@ function App() {
                         <div className="p-4 flex gap-6 overflow-x-scroll" style={{scrollbarWidth: "thin", scrollbarColor: "#888 rgba(0, 0, 0, 0.1)"}}>
                             {recentProject.map(sampleProject => (
                                 <ProjectCard
+                                    key={sampleProject._id}
                                     project={sampleProject}
                                     onClick={() => setModalOpen({state: true, project: sampleProject})}
                                 />

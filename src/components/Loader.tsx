@@ -1,9 +1,7 @@
-import {useLoad} from "../context/LoadingContext";
 import LoadingIcon from "./LoadingIcon.tsx";
 
-function Loader({children} : {children: React.ReactNode}) {
+function Loader({children, loading} : {children: React.ReactNode, loading: boolean}) {
 
-    const {loading} = useLoad();
 
     return (
         loading ?

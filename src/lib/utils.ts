@@ -22,7 +22,7 @@ export function checkForVisitorId(): string | undefined {
 
 export async function generateSessionandVisitorId() {
     const tracker = captureRef()
-    return await fetch(API_TRACKER, {
+    await fetch(API_TRACKER, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -59,7 +59,7 @@ export async function startSession() {
     })
 }
 export async function logEvent(event_type: string, event_value: string, additional?:{event_parent?: string, target?: string}) {
-    return await fetch(API_TRACKER + "/log", {
+    await fetch(API_TRACKER + "/log", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -75,11 +75,11 @@ export async function logEvent(event_type: string, event_value: string, addition
     }).then(res => res.json())
 }
 
-export function endSession() {
+export async function endSession() {
     const sessionId = checkForSession();
     if (sessionId) {
         const url = API_TRACKER + "/end";
-        fetch(url, {
+        await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export function captureRef() {
     const ref = urlParams.get('ref');
 
     if (ref) {
-        localStorage.setItem('ref', ref);
+        sessionStorage.setItem('ref', ref);
         urlParams.delete('ref');
         const newUrl = window.location.pathname + (urlParams.toString() ? '?' + urlParams.toString() : '');
         window.history.replaceState({}, '', newUrl);
